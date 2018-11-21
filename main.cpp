@@ -5,12 +5,8 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
     Vertex v1;
-    Vertex ve;
-    v1.color=3;
-    ve.color=5;
-    Edge e;
-    e.v1=v1;
-    e.v2=ve;
-    std::cout << e.v2.color;
+    v1.set_pos(1.23,2.4495);
+
+    std::cout << v1.x_pos;
     return 0;
 }
