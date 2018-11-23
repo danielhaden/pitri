@@ -1,5 +1,5 @@
 //
-// Created by hadend on 11/20/18.
+// Created by hadend on 11/22/18.
 //
 
 #ifndef PITRI_VERTEX_H
@@ -9,12 +9,17 @@
 #include <string>
 
 struct Vertex {
-    int color;
-    std::string name;
-    double x_pos;
-    double y_pos;
+    int id;
+    std::string tag;
 
-    void set_pos(double x, double y);
+    int degree;
+
+    int color;
+    double x;
+    double y;
+
+    friend bool operator< (const Vertex &lhs, const Vertex &rhs);
+    friend bool operator> (const Vertex &lhs, const Vertex &rhs);
 };
 
 

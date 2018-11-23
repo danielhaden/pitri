@@ -1,10 +1,23 @@
 //
-// Created by hadend on 11/20/18.
+// Created by hadend on 11/22/18.
 //
 
 #include "Vertex.h"
 
-void Vertex::set_pos(double x, double y) {
-    x_pos = x;
-    y_pos = y;
+bool operator< (const Vertex &lhs, const Vertex &rhs) {
+    if (lhs.id < rhs.id) {
+        return true;
+
+    } else {
+        return false;
+    }
+}
+
+bool operator>(const Vertex &lhs, const Vertex &rhs) {
+    if (lhs.id > rhs.id) {
+        return true;
+
+    } else {
+        return false;
+    }
 }
