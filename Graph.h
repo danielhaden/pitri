@@ -8,18 +8,22 @@
 
 #include <vector>
 #include <map>
+#include <list>
 #include "Vertex.h"
 
 class Graph {
 public:
-    bool contains(Vertex v);
+    Graph();
 
-    bool add_vertex(Vertex v);
+    Vertex& add_vertex();
+    Vertex& add_vertex(int vertex_id);
 
-    bool del_vertex(Vertex v);
+    bool add_edge(int v1, int v2);
+
+    int v();
 
 private:
-    std::map< Vertex, std::vector<Vertex> > AdjacencyList;
+    std::map<Vertex*, std::vector<Vertex*> > AdjacencyList;
     int order;
 };
 

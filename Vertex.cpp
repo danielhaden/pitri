@@ -4,20 +4,23 @@
 
 #include "Vertex.h"
 
-bool operator< (const Vertex &lhs, const Vertex &rhs) {
-    if (lhs.id < rhs.id) {
-        return true;
-
-    } else {
-        return false;
-    }
+Vertex::Vertex(int num) {
+    id = num;
 }
 
-bool operator>(const Vertex &lhs, const Vertex &rhs) {
-    if (lhs.id > rhs.id) {
-        return true;
+Vertex &Vertex::operator=(const Vertex &rhs) {
 
-    } else {
-        return false;
+    // self-assignment guard
+    if (this == &rhs) {
+        return *this;
     }
+
+    id = rhs.id;
+    tag = rhs.tag;
+    color = rhs.color;
+    x = rhs.x;
+    y = rhs.y;
+
+    return *this;
 }
+

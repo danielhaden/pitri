@@ -2,13 +2,28 @@
 // Created by hadend on 11/22/18.
 //
 
+#include <iostream>
 #include "Graph.h"
 
-bool Graph::contains(Vertex v) {
-    if (AdjacencyList.find(v) == AdjacencyList.end()) {
-        return false;
-
-    } else {
-        return true;
-    }
+Graph::Graph() {
+    order = 0;
 }
+
+int Graph::v() {
+    return order;
+}
+
+Vertex &Graph::add_vertex() {
+    Vertex *v = new Vertex;
+    order++;
+    return *v;
+}
+
+
+
+
+
+
+
+
+

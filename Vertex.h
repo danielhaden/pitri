@@ -9,17 +9,17 @@
 #include <string>
 
 struct Vertex {
+    Vertex() {};
+    Vertex(int num);
+
     int id;
     std::string tag;
-
-    int degree;
 
     int color;
     double x;
     double y;
 
-    friend bool operator< (const Vertex &lhs, const Vertex &rhs);
-    friend bool operator> (const Vertex &lhs, const Vertex &rhs);
+    Vertex& operator= (const Vertex& rhs);
 };
 
 
