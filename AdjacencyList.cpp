@@ -1,72 +1,88 @@
 //
-// Created by hadend on 11/22/18.
+// Created by hadend on 11/23/18.
 //
 
 #include <iostream>
 #include "AdjacencyList.h"
 
-AdjacencyList::AdjacencyList() {
-    size = 0;
-    Vertex nullvertex;
-    nullvertex.id = -1;
-    nullvertex.tag = "nullvertex";
-    nullvertex.color = -1;
-}
-
-Vertex &AdjacencyList::operator[](const int v) {
+AdjacencyList &AdjacencyList::operator+(const int id) {
     try {
-        Vertex* v_ptr = table.at(v).first;
-        return *v_ptr;
+        adjacency_table.at(id);
+        std::cout << "vertex " << id << " already in AdjacencyList)!\n";
 
-    } catch (const std::out_of_range oor) {
-        std::cout << "vertex " << v << " not in table!\n";
-        return nullvertex;
-    }
-}
-
-Vertex &AdjacencyList::operator+(int v) {
-    // try-block guards against duplicate vertex
-    try {
-        Vertex* v_ptr = table.at(v).first;
-        std::cout << "vertex " << v << " already in table!\n";
-        return *v_ptr;
-
-    // catch-block creates new vertex
-    } catch (const std::out_of_range oor) {
-        Vertex* v_ptr = new Vertex(v);
-        table.insert( Row( v, Entry( v_ptr, NeighborList())));
+    } catch(std::out_of_range orr) {
+        Vertex* v_ptr = new Vertex();
+        adjacency_table[id] = Entry(v_ptr, VList());
         size++;
-        return *v_ptr;
-    }
-}
 
-AdjacencyList &AdjacencyList::operator-(int v) {
-    // try-block performs removal
-    try {
-        Vertex* v_ptr = table.at(v).first;
-        NeighborList neighbors = table.at(v).second;
-
-        for (auto it = neighbors.begin(); it != neighbors.end(); ++it) {
-            std::cout << "here: " << *it << std::endl;
-        }
-
-        table.erase(v);
-        size--;
-        delete v_ptr;
-
-    } catch (const std::out_of_range oor) {
-        std::cout << "vertex " << v << " not in table!\n" << std::endl;
     }
     return *this;
 }
 
+AdjacencyList &AdjacencyList::operator-(const int id) {
+    try {
+        Entry entry = adjacency_table.at(id);
+        VList neighbors = entry.second;
 
+        // delete adjacencies/edges of deleted vertex
+        for(std::vector<Vertex*>::iterator it = neighbors.begin(); it != neighbors.end(); ++it) {
+            _delete(*it, entry.first);
+        }
+        size--;
 
+    } catch(std::out_of_range oor) {
+        std::cout << "vertex " << id << " not in AdjacencyList!\n";
+    }
+    return *this;
+}
 
+void AdjacencyList::_delete(Vertex *v1, Vertex *v2) {
+    VList n = adjacency_table[v1->id].second;
 
+    for(std::vector<Vertex*>::iterator it = n.begin(); it != n.end(); ++it) {
+        if (*it == v2) {
+            adjacency_table[v1->id].second.erase( it );
+            break;
+        }
+    }
+}
 
+AdjacencyList::AdjacencyList() {
+    size = 0;
 
+    // null vertex has id -1
+    Vertex nullvtx(-1);
 
+}
 
+AdjacencyList &AdjacencyList::operator+(const std::pair<int, int> edge) {
+    Vertex* v1_ptr;
+    Vertex* v2_ptr;
 
+    // catches missing v1 in table
+    try {
+        Vertex* v1_ptr = adjacency_table.at(edge.first).first;
 
+    } catch (std::out_of_range oor) {
+
+        // create missing vertex
+        operator+(edge.first);
+        v1_ptr = adjacency_table[edge.first].first;
+    }
+
+    // catches missing v2 in table
+    try {
+        Vertex* v2_ptr = adjacency_table.at(edge.second).first;
+
+    } catch (std::out_of_range oor) {
+
+        // create missing vertex
+        operator+(edge.second);
+        v2_ptr = adjacency_table[edge.second].first;
+    }
+
+    // add edge to table
+    adjacency_table[edge.first].second.push_back(v2_ptr);
+    adjacency_table[edge.second].second.push_back(v1_ptr);
+    return *this;
+}
