@@ -52,7 +52,6 @@ AdjacencyList::AdjacencyList() {
 
     // null vertex has id -1
     Vertex nullvtx(-1);
-
 }
 
 AdjacencyList &AdjacencyList::operator+(const std::pair<int, int> edge) {
@@ -61,7 +60,7 @@ AdjacencyList &AdjacencyList::operator+(const std::pair<int, int> edge) {
 
     // catches missing v1 in table
     try {
-        Vertex* v1_ptr = adjacency_table.at(edge.first).first;
+        v1_ptr = adjacency_table.at(edge.first).first;
 
     } catch (std::out_of_range oor) {
 
@@ -72,7 +71,7 @@ AdjacencyList &AdjacencyList::operator+(const std::pair<int, int> edge) {
 
     // catches missing v2 in table
     try {
-        Vertex* v2_ptr = adjacency_table.at(edge.second).first;
+        v2_ptr = adjacency_table.at(edge.second).first;
 
     } catch (std::out_of_range oor) {
 
@@ -84,5 +83,34 @@ AdjacencyList &AdjacencyList::operator+(const std::pair<int, int> edge) {
     // add edge to table
     adjacency_table[edge.first].second.push_back(v2_ptr);
     adjacency_table[edge.second].second.push_back(v1_ptr);
+
+    return *this;
+}
+
+AdjacencyList &AdjacencyList::operator-(const std::pair<int, int> edge) {
+    Vertex* v1_ptr;
+    Vertex* v2_ptr;
+
+    // catches missing v1 in table
+    try {
+        v1_ptr = adjacency_table.at(edge.first).first;
+
+    } catch (std::out_of_range oor) {
+        std::cout << "vertex " << edge.first << " not in AdjacencyList!\n";
+        return *this;
+    }
+
+    // catches missing v2 in table
+    try {
+        v2_ptr = adjacency_table.at(edge.second).first;
+
+    } catch (std::out_of_range oor) {
+        std::cout << "vertex " << edge.first << " not in AdjacencyList!\n";
+        return *this;
+    }
+
+    // delete edge
+    _delete(v1_ptr, v2_ptr);
+
     return *this;
 }
