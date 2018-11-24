@@ -9,17 +9,16 @@
 #include <string>
 
 struct Vertex {
-    Vertex() {};
+
+    // Constructors
+    Vertex();
     Vertex(int num);
 
+    // members
     int id;
     std::string tag;
-
     int color;
-    double x;
-    double y;
 
-    Vertex& operator= (const Vertex& rhs);
 };
 
 

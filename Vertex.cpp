@@ -6,21 +6,11 @@
 
 Vertex::Vertex(int num) {
     id = num;
+    color = -1;
 }
 
-Vertex &Vertex::operator=(const Vertex &rhs) {
+Vertex::Vertex() {
+    color = -1;
 
-    // self-assignment guard
-    if (this == &rhs) {
-        return *this;
-    }
-
-    id = rhs.id;
-    tag = rhs.tag;
-    color = rhs.color;
-    x = rhs.x;
-    y = rhs.y;
-
-    return *this;
 }
 
