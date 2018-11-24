@@ -27,6 +27,7 @@ struct AdjacencyList {
     // members
     Table adjacency_table;
     int size;
+    int edges;
     Vertex nullvtx;
 
 
@@ -38,12 +39,13 @@ struct AdjacencyList {
     AdjacencyList& operator+(const std::pair<int, int> edge);
     AdjacencyList& operator-(const std::pair<int, int> edge);
 
-
+    // -
+    friend std::ostream& operator<<(std::ostream& stream, const AdjacencyList& al);
 
 
 private:
     // removes a single adjacency(i.e. edge) in table
-    void _delete(Vertex* v1, Vertex* v2);
+    bool _delete(Vertex* v1, Vertex* v2);
 };
 
 

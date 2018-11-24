@@ -11,7 +11,7 @@ AdjacencyList &AdjacencyList::operator+(const int id) {
         std::cout << "vertex " << id << " already in AdjacencyList)!\n";
 
     } catch(std::out_of_range orr) {
-        Vertex* v_ptr = new Vertex();
+        Vertex* v_ptr = new Vertex(id);
         adjacency_table[id] = Entry(v_ptr, VList());
         size++;
 
@@ -36,19 +36,22 @@ AdjacencyList &AdjacencyList::operator-(const int id) {
     return *this;
 }
 
-void AdjacencyList::_delete(Vertex *v1, Vertex *v2) {
-    VList n = adjacency_table[v1->id].second;
+// delete v2 as adjacent to v1
+bool AdjacencyList::_delete(Vertex *v1, Vertex *v2) {
 
-    for(std::vector<Vertex*>::iterator it = n.begin(); it != n.end(); ++it) {
-        if (*it == v2) {
-            adjacency_table[v1->id].second.erase( it );
-            break;
+    std::vector<Vertex*>::iterator it;
+    for (it = adjacency_table[v1->id].second.begin(); it != adjacency_table[v1->id].second.end(); ++it) {
+        if ((*it)->id == v2->id) {
+            adjacency_table[v1->id].second.erase(it);
+            return true;
         }
     }
+    return false;
 }
 
 AdjacencyList::AdjacencyList() {
     size = 0;
+    edges = 0;
 
     // null vertex has id -1
     Vertex nullvtx(-1);
@@ -84,6 +87,8 @@ AdjacencyList &AdjacencyList::operator+(const std::pair<int, int> edge) {
     adjacency_table[edge.first].second.push_back(v2_ptr);
     adjacency_table[edge.second].second.push_back(v1_ptr);
 
+
+    edges++;
     return *this;
 }
 
@@ -110,7 +115,25 @@ AdjacencyList &AdjacencyList::operator-(const std::pair<int, int> edge) {
     }
 
     // delete edge
-    _delete(v1_ptr, v2_ptr);
+    bool r1 = _delete(v1_ptr, v2_ptr);
+    bool r2 = _delete(v2_ptr, v1_ptr);
+
+    if (r1 & r2) {
+        edges--;
+    }
+
 
     return *this;
+}
+
+std::ostream &operator<<(std::ostream &stream, const AdjacencyList &al) {
+    for ( auto const& v : al.adjacency_table ) {
+        std::cout << v.first << ": {";
+        AdjacencyList::VList neighbors = v.second.second;
+
+        for ( auto const& n : neighbors ) {
+            std::cout << n->id << ", ";
+        }
+        std::cout << "}\n";
+    }
 }
