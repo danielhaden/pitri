@@ -45,7 +45,7 @@ struct AdjacencyList {
 
     // accessors
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyList& al);
-    AdjacencyList& contains(const E edge);
+    bool contains(const E edge);
 
 
 private:

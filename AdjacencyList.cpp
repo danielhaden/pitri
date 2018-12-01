@@ -147,6 +147,13 @@ std::ostream &operator<<(std::ostream &stream, const AdjacencyList &al) {
     return stream;
 }
 
-AdjacencyList &AdjacencyList::contains(const AdjacencyList::E edge) {
-    for ( int v_ptr)
+bool AdjacencyList::contains(const AdjacencyList::E edge) {
+
+    AdjacencyList::VList neighbors = adjacency_table[edge.first].second;
+    for ( auto const& v : neighbors) {
+        if (v->id == edge.second) {
+            return true;
+        }
+    }
+    return false;
 }
