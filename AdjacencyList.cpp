@@ -146,3 +146,7 @@ std::ostream &operator<<(std::ostream &stream, const AdjacencyList &al) {
     }
     return stream;
 }
+
+AdjacencyList &AdjacencyList::contains(const AdjacencyList::E edge) {
+    for ( int v_ptr)
+}

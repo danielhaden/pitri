@@ -2,6 +2,7 @@
 #include "Vertex.h"
 #include "AdjacencyList.h"
 #include "Graph.h"
+#include <list>
 
 typedef std::pair<int, int> E;
 
@@ -25,6 +26,9 @@ int main() {
 //    al+E(1,1);
     Graph G();
     Graph G2(false);
+
+
+    std::map< int, std::list<int> > test { {1, {2,3,5}}, {2, {5,6}} };
 
 
 

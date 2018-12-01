@@ -7,12 +7,13 @@
 
 
 #include "AdjacencyList.h"
+#include <list>
 
 class Graph {
 public:
     Graph();
     Graph(bool simple);
-
+    Graph(std::map< int, std::list<int> > al);
 
 private:
     AdjacencyList adjacency_list;

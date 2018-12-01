@@ -42,14 +42,10 @@ struct AdjacencyList {
     AdjacencyList& operator+(const E edge);
     AdjacencyList& operator-(const E edge);
 
-    // undirected edge mutators
-//    AdjacencyList& operator+(const uE edge);
-//    AdjacencyList& operator-(const uE edge);
-
-
 
     // accessors
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyList& al);
+    AdjacencyList& contains(const E edge);
 
 
 private:
