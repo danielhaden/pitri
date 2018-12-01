@@ -12,7 +12,7 @@ AdjacencyList &AdjacencyList::operator+(const int id) {
 
     } catch(std::out_of_range orr) {
         Vertex* v_ptr = new Vertex(id);
-        adjacency_table[id] = Entry(v_ptr, VList());
+        adjacency_table.insert( std::pair<int, Entry>(id,  Entry(v_ptr, VList())) );
         size++;
 
     }
@@ -57,7 +57,7 @@ AdjacencyList::AdjacencyList() {
     Vertex nullvtx(-1);
 }
 
-AdjacencyList &AdjacencyList::operator+(const std::pair<int, int> edge) {
+AdjacencyList &AdjacencyList::operator+(const E edge) {
     Vertex* v1_ptr;
     Vertex* v2_ptr;
 
@@ -92,7 +92,7 @@ AdjacencyList &AdjacencyList::operator+(const std::pair<int, int> edge) {
     return *this;
 }
 
-AdjacencyList &AdjacencyList::operator-(const std::pair<int, int> edge) {
+AdjacencyList &AdjacencyList::operator-(const E edge) {
     Vertex* v1_ptr;
     Vertex* v2_ptr;
 
@@ -121,19 +121,28 @@ AdjacencyList &AdjacencyList::operator-(const std::pair<int, int> edge) {
     if (r1 & r2) {
         edges--;
     }
-
-
     return *this;
 }
 
 std::ostream &operator<<(std::ostream &stream, const AdjacencyList &al) {
-    for ( auto const& v : al.adjacency_table ) {
-        std::cout << v.first << ": {";
-        AdjacencyList::VList neighbors = v.second.second;
+    std::vector<Vertex*>::iterator it;
 
-        for ( auto const& n : neighbors ) {
-            std::cout << n->id << ", ";
+    for ( auto const& v : al.adjacency_table ) {
+
+        AdjacencyList::VList neighbors = v.second.second;
+        std::cout << v.first << ": ";
+
+        if (neighbors.size() == 0) {
+            std::cout << "{}\n";
+
+        } else {
+            std::cout << "{";
+
+            for (int i = 0; i < neighbors.size() - 1; ++i) {
+                std::cout << neighbors[i]->id << ", ";
+            }
+            std::cout << neighbors[neighbors.size() - 1]->id << "}\n";
         }
-        std::cout << "}\n";
     }
+    return stream;
 }

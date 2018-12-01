@@ -1,30 +1,25 @@
 //
-// Created by hadend on 11/22/18.
+// Created by hadend on 12/1/18.
 //
 
 #ifndef PITRI_GRAPH_H
 #define PITRI_GRAPH_H
 
 
-#include <vector>
-#include <map>
-#include <list>
-#include "Vertex.h"
+#include "AdjacencyList.h"
 
 class Graph {
 public:
-    Graph();
+    bool simple();
 
-    Vertex& add_vertex();
-    Vertex& add_vertex(int vertex_id);
-
-    bool add_edge(int v1, int v2);
-
-    int v();
 
 private:
-    std::map<Vertex*, std::vector<Vertex*> > AdjacencyList;
+    AdjacencyList adjacency_list;
     int order;
+    bool directed;
+    bool multiedges;
+    bool loops;
+
 };
 
 

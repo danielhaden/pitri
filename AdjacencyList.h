@@ -21,6 +21,9 @@ struct AdjacencyList {
     typedef std::pair< Vertex*, VList > Entry;
     typedef std::map< int, Entry > Table;
 
+    typedef std::pair<int, int> E;   // undirected edge typedef
+    typedef std::tuple<int, int> dE; // directed edge typedef
+
     // constructors
     AdjacencyList();
 
@@ -35,11 +38,17 @@ struct AdjacencyList {
     AdjacencyList& operator+(const int id);
     AdjacencyList& operator-(const int id);
 
-    // edge mutators
-    AdjacencyList& operator+(const std::pair<int, int> edge);
-    AdjacencyList& operator-(const std::pair<int, int> edge);
+    // undirected edge mutators
+    AdjacencyList& operator+(const E edge);
+    AdjacencyList& operator-(const E edge);
 
-    // -
+    // undirected edge mutators
+//    AdjacencyList& operator+(const uE edge);
+//    AdjacencyList& operator-(const uE edge);
+
+
+
+    // accessors
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyList& al);
 
 

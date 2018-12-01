@@ -1,29 +1,12 @@
 //
-// Created by hadend on 11/22/18.
+// Created by hadend on 12/1/18.
 //
 
-#include <iostream>
 #include "Graph.h"
 
-Graph::Graph() {
-    order = 0;
+bool Graph::simple() {
+    if ((loops) | (multiedges)) {
+        return false;
+    }
+    return true;
 }
-
-int Graph::v() {
-    return order;
-}
-
-Vertex &Graph::add_vertex() {
-    Vertex *v = new Vertex;
-    order++;
-    return *v;
-}
-
-
-
-
-
-
-
-
-

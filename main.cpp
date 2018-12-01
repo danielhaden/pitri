@@ -1,19 +1,30 @@
 #include <iostream>
-#include "Graph.h"
+#include "Vertex.h"
 #include "AdjacencyList.h"
+
+typedef std::pair<int, int> E;
 
 int main() {
     AdjacencyList al;
-    Vertex v;
-    v.color = 2;
-    Vertex m;
-    m = v;
-
+    al+1;
     al+2;
-    al[2];
-    al-3;
-    al-2;
-    std::cout << m.color;
+    al+3;
+   // std::cout << "edges: " << al.edges << std::endl;
+    al+E(2,3);
+   // std::cout << "edges: " << al.edges << std::endl;
+    al+E(2,4);
+    al+5;
+    //std::cout << "order " << al.size;
+    al+7;
+    al+E(5,7);
+    al+E(4,5);
+    al+E(4,5);
+    al-E(4,5);
+    al-E(4,5);
+    al+E(1,1);
+    std::cout << al;
+
+
 
     return 0;
 }
