@@ -10,15 +10,17 @@
 
 class Graph {
 public:
-    bool simple();
+    Graph();
+    Graph(bool simple);
 
 
 private:
     AdjacencyList adjacency_list;
     int order;
-    bool directed;
     bool multiedges;
     bool loops;
+    bool simple;
+
 
 };
 

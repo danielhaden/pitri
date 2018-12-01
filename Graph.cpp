@@ -4,9 +4,14 @@
 
 #include "Graph.h"
 
-bool Graph::simple() {
-    if ((loops) | (multiedges)) {
-        return false;
-    }
-    return true;
+
+Graph::Graph() {
+    order = 0;
+    multiedges = false;
+    loops = false;
+    simple = true;
+}
+
+Graph::Graph(bool simple) : simple(simple) {
+
 }
