@@ -27,6 +27,7 @@ struct AdjacencyTable {
     // edge operators
     AdjacencyTable& operator+(E edge);
     AdjacencyTable& operator-(E edge);
+    AdjacencyTable& complete();
 
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyTable& at);
 

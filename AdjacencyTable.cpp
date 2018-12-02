@@ -72,3 +72,18 @@ AdjacencyTable &AdjacencyTable::operator-(AdjacencyTable::E edge) {
     atable[edge.second].erase(edge.first);
     return *this;
 }
+
+AdjacencyTable &AdjacencyTable::complete() {
+    NList all;
+
+    // get all vertices in table
+    for( auto const& v : atable) {
+        all.insert(v.first);
+    }
+
+    // set neighbors as every vertex for each vertex
+    for( auto const& v : all) {
+        atable[v] = all;
+    }
+    return *this;
+}
