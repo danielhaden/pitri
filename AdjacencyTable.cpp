@@ -28,6 +28,16 @@ AdjacencyTable &AdjacencyTable::operator+(E edge) {
 }
 
 AdjacencyTable &AdjacencyTable::operator-(int v) {
+    NList neighbors = atable[v];
+
+    // erase adjacency for all neighbors
+    if ( neighbors.size() != 0 ) {
+        for ( auto const& u : neighbors) {
+            atable[u].erase(v);
+        }
+    }
+    atable.erase(v);
+
     return *this;
 }
 
@@ -55,4 +65,10 @@ std::ostream &operator<<(std::ostream &stream, const AdjacencyTable &at) {
         }
     }
     return stream;
+}
+
+AdjacencyTable &AdjacencyTable::operator-(AdjacencyTable::E edge) {
+    atable[edge.first].erase(edge.second);
+    atable[edge.second].erase(edge.first);
+    return *this;
 }

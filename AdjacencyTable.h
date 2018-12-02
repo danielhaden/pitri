@@ -16,6 +16,7 @@ struct AdjacencyTable {
     typedef std::set<int> NList;
     typedef std::pair<int, int> E;
 
+    // members
     std::map<int, NList> atable;
 
     // vertex operators
@@ -25,6 +26,7 @@ struct AdjacencyTable {
 
     // edge operators
     AdjacencyTable& operator+(E edge);
+    AdjacencyTable& operator-(E edge);
 
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyTable& at);
 

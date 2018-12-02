@@ -14,6 +14,8 @@ int main() {
     at+E(3,2);
     at+E(2,3);
     at+E(1,3);
+    at-E(1,3);
+
     std::cout << at;
     return 0;
 }
