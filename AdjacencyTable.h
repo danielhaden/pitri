@@ -32,11 +32,11 @@ struct AdjacencyTable {
     AdjacencyTable& operator-(E edge); // removes an edge
     AdjacencyTable& complete();        // introduces every edge to the graph
     AdjacencyTable& operator!();       // constructs the complement
-    AdjacencyTable& operator*()
-
 
     // accessors
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyTable& at);
+    bool contains(int v);
+    bool contains(E edge);
 
 };
 

@@ -107,3 +107,29 @@ AdjacencyTable &AdjacencyTable::operator!() {
     }
     return *this;
 }
+
+bool AdjacencyTable::contains(int v) {
+    std::map<int, NList>::iterator it;
+    it = atable.find(v);
+
+    if (it != atable.end()) {
+        return true;
+    }
+    return false;
+}
+
+bool AdjacencyTable::contains(AdjacencyTable::E edge) {
+    std::map<int, NList>::iterator it;
+    it = atable.find(edge.first);
+
+    if (it != atable.end()) {
+        std::set<int>::iterator jt;
+        jt = atable[edge.first].find(edge.second);
+
+        if (jt != atable[edge.first].end()) {
+            return true;
+        }
+    }
+    return false;
+
+}
