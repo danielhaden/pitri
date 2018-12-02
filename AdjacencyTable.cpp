@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 #include "AdjacencyTable.h"
 #include "LoopException.h"
 
@@ -84,6 +85,25 @@ AdjacencyTable &AdjacencyTable::complete() {
     // set neighbors as every vertex for each vertex
     for( auto const& v : all) {
         atable[v] = all;
+    }
+    return *this;
+}
+
+AdjacencyTable &AdjacencyTable::operator!() {
+    NList all;
+
+    // get all vertices in table
+    for( auto const& v : atable) {
+        all.insert(v.first);
+    }
+
+    for( auto const& u : all) {
+        NList difference;
+        std::set_difference(all.begin(), all.end(),
+                atable[u].begin(), atable[u].end(),
+                std::inserter(difference, difference.end()));
+
+        atable[u] = difference;
     }
     return *this;
 }

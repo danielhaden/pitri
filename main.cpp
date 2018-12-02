@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Vertex.h"
-#include "AdjacencyList.h"
 #include "Graph.h"
 #include "AdjacencyTable.h"
 #include <list>
@@ -17,6 +16,7 @@ int main() {
     at-E(1,3);
     at.complete();
     at-E(1,3);
+    !at;
 
     std::cout << at;
     return 0;

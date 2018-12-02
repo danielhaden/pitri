@@ -9,8 +9,12 @@
 #include <map>
 #include "Vertex.h"
 
-
-
+//###############################################//
+// AdjacencyTable holds the list of vertices and //
+// and adjacencies as a simple adjacency list.   //
+// Underlying set operations are implemented here//
+// instead of in Graph.cpp                       //
+//###############################################//
 
 struct AdjacencyTable {
     typedef std::set<int> NList;
@@ -20,15 +24,18 @@ struct AdjacencyTable {
     std::map<int, NList> atable;
 
     // vertex operators
-    AdjacencyTable& operator+(int v);
-    AdjacencyTable& operator-(int v);
-
+    AdjacencyTable& operator+(int v); // adds a vertex (idempotent)
+    AdjacencyTable& operator-(int v); // deletes a vertex
 
     // edge operators
-    AdjacencyTable& operator+(E edge);
-    AdjacencyTable& operator-(E edge);
-    AdjacencyTable& complete();
+    AdjacencyTable& operator+(E edge); // adds an edge (idempotent)
+    AdjacencyTable& operator-(E edge); // removes an edge
+    AdjacencyTable& complete();        // introduces every edge to the graph
+    AdjacencyTable& operator!();       // constructs the complement
+    AdjacencyTable& operator*()
 
+
+    // accessors
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyTable& at);
 
 };
