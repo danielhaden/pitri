@@ -4,7 +4,10 @@
 
 #include <iostream>
 #include "Graph.h"
+#include "LoopException.h"
+#include "MultiedgeException.h"
 
+typedef std::pair<int, int> E;   // undirected edge typedef
 
 Graph::Graph() {
     order = 0;
@@ -18,17 +21,33 @@ Graph::Graph(bool simple) : simple(simple) {
 }
 
 Graph::Graph(std::map<int, std::list<int> > al) {
-    for (auto const& x : al) {
+
+    for (auto const &x : al) {
         int u = x.first;
 
-        for (auto const& i : x.second) {
+        for (auto const &i : x.second) {
             int v = i;
 
+
             if (u == v) {
-                loops = true;
+                throw LoopException();
             }
 
-            adjacency_list+(u,v);
+            adjacency_list + E(u, v);
         }
     }
+
+}
+
+int Graph::size() {
+    return adjacency_list.size;
+}
+
+std::ostream &operator<<(std::ostream &stream, const Graph &g) {
+    std::cout << g.adjacency_list;
+    return stream;
+}
+
+AdjacencyList &Graph::getAdjacencyList() {
+    return adjacency_list;
 }

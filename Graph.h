@@ -15,6 +15,11 @@ public:
     Graph(bool simple);
     Graph(std::map< int, std::list<int> > al);
 
+    int size();
+
+    friend std::ostream& operator<<(std::ostream& stream, const Graph& g);
+    AdjacencyList& getAdjacencyList();
+
 private:
     AdjacencyList adjacency_list;
     int order;

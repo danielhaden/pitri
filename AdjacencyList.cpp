@@ -125,7 +125,6 @@ AdjacencyList &AdjacencyList::operator-(const E edge) {
 }
 
 std::ostream &operator<<(std::ostream &stream, const AdjacencyList &al) {
-    std::vector<Vertex*>::iterator it;
 
     for ( auto const& v : al.adjacency_table ) {
 
@@ -138,22 +137,15 @@ std::ostream &operator<<(std::ostream &stream, const AdjacencyList &al) {
         } else {
             std::cout << "{";
 
-            for (int i = 0; i < neighbors.size() - 1; ++i) {
-                std::cout << neighbors[i]->id << ", ";
+            std::vector<Vertex*>::iterator it;
+
+            for (it = neighbors.begin(); it != std::prev(neighbors.end()); ++it) {
+
+                std::cout << (*it)->id << ", ";
             }
-            std::cout << neighbors[neighbors.size() - 1]->id << "}\n";
+            std::cout << neighbors.back()->id <<  "}\n";
         }
     }
     return stream;
 }
 
-bool AdjacencyList::contains(const AdjacencyList::E edge) {
-
-    AdjacencyList::VList neighbors = adjacency_table[edge.first].second;
-    for ( auto const& v : neighbors) {
-        if (v->id == edge.second) {
-            return true;
-        }
-    }
-    return false;
-}
