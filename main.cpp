@@ -31,6 +31,13 @@ int main() {
     Graph Gr(G({{1, { 2,3,4}}}));
     std::cout << "G has: " << Gr.size() << std::endl;
     std::cout << Gr << std::endl;
+    Graph S({ {1, {2,3,4,5,6,7,8,9,10,11}},
+              {2, {1,3,4,5,6,7,8,9,10,11}}
+               });
+
+    std::cout << S << std::endl;
+
+
 //
 //    AdjacencyList al;
 //    al+E(1,2);

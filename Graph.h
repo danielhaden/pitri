@@ -14,6 +14,7 @@ public:
     Graph();
     Graph(bool simple);
     Graph(std::map< int, std::list<int> > al);
+    Graph(std::string arg);
 
     int size();
 

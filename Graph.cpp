@@ -51,3 +51,9 @@ std::ostream &operator<<(std::ostream &stream, const Graph &g) {
 AdjacencyList &Graph::getAdjacencyList() {
     return adjacency_list;
 }
+
+Graph::Graph(std::string arg) {
+    if (arg == "Sulanke") {
+
+    }
+}
