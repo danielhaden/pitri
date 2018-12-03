@@ -103,6 +103,7 @@ AdjacencyTable &AdjacencyTable::operator!() {
                 atable[u].begin(), atable[u].end(),
                 std::inserter(difference, difference.end()));
 
+        difference.erase(u);
         atable[u] = difference;
     }
     return *this;

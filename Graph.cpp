@@ -85,12 +85,11 @@ int Graph::e() {
 }
 
 Graph &Graph::operator!() {
-    NList all;
+    etable.clear();
+    !atable;
+    _rebuildEtable();
 
-//    for( auto const& v : atable) {
-//        all.insert(v.first);
-//    }
-
+    return *this;
 }
 
 Graph &Graph::clearEdges() {
@@ -128,9 +127,8 @@ Graph::ETable &Graph::_rebuildEtable() {
             E e(u, v.first);
 
             if (v.first < u) {
-                E e(u, v.first);
+                continue;
             }
-
             etable.insert(std::pair<E, std::unique_ptr<Edge> >(e, std::unique_ptr<Edge>(new Edge(e.first, e.second))));
         }
     }

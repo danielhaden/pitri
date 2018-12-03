@@ -31,8 +31,11 @@ int main() {
     g+E(1,5);
     g-E(2,3);
     g+E(2,3);
+
 //    g.clearEdges();
 
+    std::cout << g << std::endl;
+    !g;
     std::cout << g << std::endl;
     std::cout << g.e();
 
