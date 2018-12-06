@@ -24,8 +24,9 @@ struct AdjacencyTable {
     std::map<int, NList> atable;
 
     // vertex operators
-    AdjacencyTable& operator+(int v); // adds a vertex (idempotent)
-    AdjacencyTable& operator-(int v); // deletes a vertex
+    AdjacencyTable& operator+(int v);           // adds a vertex (idempotent)
+    AdjacencyTable& operator-(int v);           // deletes a vertex
+    AdjacencyTable& relabel(int from, int to);  // changes the unique vertex id
 
     // edge operators
     AdjacencyTable& operator+(E edge); // adds an edge (idempotent)

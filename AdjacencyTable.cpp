@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "AdjacencyTable.h"
 #include "LoopException.h"
+#include "IDCollisionException.h"
 
 AdjacencyTable &AdjacencyTable::operator+(int v) {
     atable.insert( std::pair<int, NList >( v, NList() ) );
@@ -133,4 +134,24 @@ bool AdjacencyTable::contains(AdjacencyTable::E edge) {
     }
     return false;
 
+}
+
+AdjacencyTable &AdjacencyTable::relabel(int from, int to) {
+
+    // check that new id is not already used
+    if (atable.find(to) != atable.end()) {
+        throw IDCollisionException();
+    }
+
+    // change key of vertex
+    NList neighbors = atable[from];
+    atable.insert(std::pair<int, NList> (to, neighbors));
+    atable.erase(from);
+
+    // change adjacency name
+    for (auto const& v : neighbors) {
+        atable[v].erase(from);
+        atable[v].insert(to);
+    }
+    return *this;
 }
