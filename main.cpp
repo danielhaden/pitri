@@ -42,9 +42,12 @@ int main() {
     std::cout << g << std::endl;
    // std::cout << g.e();
 
-    Graph K('K', 15);
+    Graph K('K', 6);
     std::cout << K << std::endl;
-    std::cout << K.e();
+    std::cout << K.e() << std::endl;
+
+    Graph C('C', 5);
+    std::cout << C << std::endl;
 
     return 0;
 }

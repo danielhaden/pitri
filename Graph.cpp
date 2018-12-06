@@ -165,16 +165,28 @@ Graph &Graph::complete() {
 }
 
 Graph::Graph(const char c, int order) {
-    if (c == 'K') {
+
+    if (c == 'K') {         // 'K' flag produces a complete graph of order given
+
+        // generate vertices
         for (int i = 1; i <= order; i++) {
             *this+i;
         }
         complete();
 
+    } else if (c == 'C') {  // 'C' flag produces a cycle graph of order given
+
+        // generate vertices and edges
+        for (int i = 1; i < order; i++) {
+            *this+(E(i, i+1));
+        }
+        // generate final edge
+        *this+E(1, order);
+
+
+
     } else {
         throw ConstructorException();
     }
-
-
 }
 
