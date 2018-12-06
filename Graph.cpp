@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Graph.h"
 #include "LoopException.h"
+#include "ConstructorException.h"
 #include <memory>
 
 
@@ -162,3 +163,18 @@ Graph &Graph::complete() {
     }
     return *this;
 }
+
+Graph::Graph(const char c, int order) {
+    if (c == 'K') {
+        for (int i = 1; i <= order; i++) {
+            *this+i;
+        }
+        complete();
+
+    } else {
+        throw ConstructorException();
+    }
+
+
+}
+

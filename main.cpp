@@ -40,7 +40,11 @@ int main() {
 
 
     std::cout << g << std::endl;
-    std::cout << g.e();
+   // std::cout << g.e();
+
+    Graph K('K', 15);
+    std::cout << K << std::endl;
+    std::cout << K.e();
 
     return 0;
 }

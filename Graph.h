@@ -17,6 +17,10 @@ class Graph {
     typedef std::map<std::pair<int,int>, std::unique_ptr<Edge> > ETable;
 
 public:
+    // constructors
+    Graph() {};
+    Graph(char c, int order);
+
     // vertex operators
     Graph& operator+(int v);    // adds a vertex
     Graph& operator-(int v);    // subtracts a vertex
