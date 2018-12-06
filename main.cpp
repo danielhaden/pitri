@@ -36,6 +36,9 @@ int main() {
 
     std::cout << g << std::endl;
     !g;
+    g.complete();
+
+
     std::cout << g << std::endl;
     std::cout << g.e();
 

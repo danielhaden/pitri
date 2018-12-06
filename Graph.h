@@ -28,8 +28,8 @@ public:
 
 
     // graph operators
-    Graph& operator+(Graph const& g);
-    Graph& operator*(Graph const& g);
+    Graph& operator=(Graph const& g);   // assignment
+    Graph& operator*(Graph const& g);   // joins two graphs
     Graph& complete();                  // adds every edge to the graph
     Graph& clearEdges();                // removes every edge
 

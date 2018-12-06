@@ -134,3 +134,31 @@ Graph::ETable &Graph::_rebuildEtable() {
     }
     return etable;
 }
+
+Graph &Graph::complete() {
+    NList all;
+
+    // get all neighbors
+    for (auto const& v : atable.atable) {
+        all.insert(v.first);
+    }
+
+    for (auto const& v : all ) {
+        for (auto const & u : all) {
+
+            // generate ordered pairs (u,v) s.t. u < v
+            if (u >= v) {
+                break;
+            }
+
+            // add an edge if it isn't already in the graph. Edges already in the
+            // graph are untouched to preserve coloring and embedding properties
+            if ( etable.find(std::pair<int,int>(u,v)) == etable.end() ) {
+                operator+(E(u,v));
+            }
+
+        }
+
+    }
+    return *this;
+}
