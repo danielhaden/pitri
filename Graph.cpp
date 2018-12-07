@@ -7,6 +7,7 @@
 #include "LoopException.h"
 #include "ConstructorException.h"
 #include "IDCollisionException.h"
+#include "OutOfRangeException.h"
 #include <memory>
 
 
@@ -228,11 +229,6 @@ Graph &Graph::relabelAll(int start, int finish) {
     for (int i = start; i <= finish; i++) {
         new_labels.insert(i);
     }
-
-
-
-
-
     return *this;
 }
 
@@ -244,4 +240,26 @@ std::set<int> Graph::listVertices() {
     }
     return vertices;
 }
+
+Graph &Graph::operator|(Graph::E edge) {
+
+    // check that edge is in graph
+    if (etable.find(edge) == etable.end()) {
+        throw OutOfRangeException();
+    }
+
+    // get adjacencies of v2
+    NList neighbors = atable.atable[edge.first];
+
+    // add edges from v1 to v2's neighbors
+    for (auto const& n : neighbors) {
+        *this+(n, edge.first);
+    }
+
+    // delete v2
+    *this-edge.second;
+
+    return *this;
+}
+
 

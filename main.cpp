@@ -48,9 +48,11 @@ int main() {
 
     Graph C('C', 5);
     C+E(2,5);
+    C|E(2,3);
     std::cout << C << std::endl;
     std::cout << C.e();
 //    std::cout << C.listVertices() << std::endl;
+
 
     return 0;
 }

@@ -22,19 +22,18 @@ class Graph {
 
 public:
     // constructors
-    Graph() {};
+    Graph() = default;;
     Graph(char c, int order);
 
     // vertex operators
-    Graph& operator+(int v);    // adds a vertex
-    Graph& operator-(int v);    // subtracts a vertex
+    Graph& operator+(int v);                    // adds a vertex
+    Graph& operator-(int v);                    // deletes a vertex
     Graph& relabelVertex(int from, int to);     // changes unique id of vertex
     Graph& relabelAll(int start, int finish);   // changes all vertex ids to new range
 
-
     // edge operators
     Graph& operator+(E edge);   // adds an edge
-    Graph& operator-(E edge);   // subtracts an edge
+    Graph& operator-(E edge);   // deletes an edge
     Graph& operator!();         // produces the complement
     Graph& operator|(E edge);   // contracts edge
 
