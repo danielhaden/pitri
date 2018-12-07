@@ -6,6 +6,7 @@
 #include "Graph.h"
 #include "LoopException.h"
 #include "ConstructorException.h"
+#include "IDCollisionException.h"
 #include <memory>
 
 
@@ -46,8 +47,8 @@ Graph &Graph::operator+(Graph::E edge) {
     }
 
     // add edge
-    etable.insert(std::pair<E, std::unique_ptr<Edge> >(edge, std::unique_ptr<Edge>(new Edge(edge.first, edge.second))));
-    atable+(edge);
+    etable.insert(EEntry(edge, std::shared_ptr<Edge>(new Edge(edge.first, edge.second))));
+    atable+edge;
 
     return *this;
 
@@ -183,10 +184,64 @@ Graph::Graph(const char c, int order) {
         // generate final edge
         *this+E(1, order);
 
-
-
     } else {
         throw ConstructorException();
     }
+}
+
+Graph &Graph::relabelVertex(int from, int to) {
+    NList neighbors = atable.atable[from];
+
+    // update the adjacency table (error checking occurs here)
+    atable.relabel(from, to);
+
+    // update the vertex table
+    vtable[from]->id = to;
+    vtable.insert(VEntry(to, vtable[from]));
+    vtable.erase(from);
+
+    // update the edge table
+    for (auto const& n : neighbors) {
+
+        // update edge object
+        std::shared_ptr<Edge> ptr;
+        ptr = etable[E(std::min(from, n), std::max(from, n))];
+        ptr->move(from, to);
+
+        // update etable and delete old entry
+        etable.insert(EEntry(E( std::min(to, n), std::max(to, n) ), ptr));
+        etable.erase(std::pair<int, int>( std::min(to, n), std::max(to, n) ));
+    }
+    return *this;
+}
+
+Graph &Graph::relabelAll(int start, int finish) {
+    NList vertices = listVertices();
+
+    // check that range is valid for graph
+    if (vertices.size() != (finish - start + 1)) {
+        throw IDCollisionException();
+    }
+
+    // generate set of new vertex ids
+    NList new_labels;
+    for (int i = start; i <= finish; i++) {
+        new_labels.insert(i);
+    }
+
+
+
+
+
+    return *this;
+}
+
+std::set<int> Graph::listVertices() {
+    NList vertices;
+
+    for (auto const& v : atable.atable) {
+        vertices.insert(v.first);
+    }
+    return vertices;
 }
 

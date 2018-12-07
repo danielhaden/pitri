@@ -7,8 +7,14 @@
 
 
 struct Edge {
-    Edge(int v1, int v2);
 
+    // constructors
+    Edge(int _v1, int _v2);
+
+    // methods
+    Edge& move(int old_v, int new_v); // changes one vertex
+
+    // public members
     int v1;
     int v2;
     bool directed;

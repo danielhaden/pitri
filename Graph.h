@@ -13,8 +13,12 @@
 class Graph {
     typedef std::pair<int, int> E;   // undirected edge typedef
     typedef std::set<int> NList;
-    typedef std::map<int, std::unique_ptr<Vertex> > VTable;
-    typedef std::map<std::pair<int,int>, std::unique_ptr<Edge> > ETable;
+
+    typedef std::map<int, std::shared_ptr<Vertex> > VTable;
+    typedef std::pair<int, std::shared_ptr<Vertex> > VEntry;
+
+    typedef std::map<std::pair<int,int>, std::shared_ptr<Edge> > ETable;
+    typedef std::pair<std::pair<int, int>, std::shared_ptr<Edge> > EEntry;
 
 public:
     // constructors
@@ -24,12 +28,15 @@ public:
     // vertex operators
     Graph& operator+(int v);    // adds a vertex
     Graph& operator-(int v);    // subtracts a vertex
+    Graph& relabelVertex(int from, int to);     // changes unique id of vertex
+    Graph& relabelAll(int start, int finish);   // changes all vertex ids to new range
+
 
     // edge operators
     Graph& operator+(E edge);   // adds an edge
     Graph& operator-(E edge);   // subtracts an edge
     Graph& operator!();         // produces the complement
-
+    Graph& operator|(E edge);   // contracts edge
 
     // graph operators
     Graph& operator=(Graph const& g);   // assignment
@@ -40,7 +47,7 @@ public:
     // graph accessors
     int v();            // returns the number of vertices
     int e();            // returns the number of edges
-
+    std::set<int> listVertices();    // returns the set of vertex ids
 
     friend std::ostream& operator<<(std::ostream& stream, const Graph& g);
 
@@ -49,7 +56,7 @@ private:
     VTable vtable;
     ETable etable;
 
-    //
+    // private methods
     VTable& _rebuildVtable();
     ETable& _rebuildEtable();
 
