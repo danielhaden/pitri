@@ -9,7 +9,10 @@
 #include "IDCollisionException.h"
 
 AdjacencyTable &AdjacencyTable::operator+(int v) {
-    atable.insert( std::pair<int, NList >( v, NList() ) );
+
+    if (atable.find(v) != atable.end()) {
+        atable.insert(std::pair<int, NList>(v, NList()));
+    }
 
     return *this;
 }
@@ -30,15 +33,19 @@ AdjacencyTable &AdjacencyTable::operator+(E edge) {
 }
 
 AdjacencyTable &AdjacencyTable::operator-(int v) {
-    NList neighbors = atable[v];
 
-    // erase adjacency for all neighbors
-    if ( neighbors.size() != 0 ) {
-        for ( auto const& u : neighbors) {
-            atable[u].erase(v);
+    if (atable.find(v) != atable.end()) {
+
+        NList neighbors = atable[v];
+
+        // erase adjacency for all neighbors
+        if (neighbors.size() != 0) {
+            for (auto const &u : neighbors) {
+                atable[u].erase(v);
+            }
         }
+        atable.erase(v);
     }
-    atable.erase(v);
 
     return *this;
 }

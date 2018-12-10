@@ -8,6 +8,7 @@
 #include "AdjacencyTable.h"
 #include "Edge.h"
 #include "EdgeTable.h"
+#include "VertexTable.h"
 #include <list>
 #include <memory>
 
@@ -18,7 +19,6 @@ class Graph {
     typedef std::map<int, std::shared_ptr<Vertex> > VTable;
     typedef std::pair<int, std::shared_ptr<Vertex> > VEntry;
 
-    typedef std::map<std::pair<int,int>, std::shared_ptr<Edge> > ETable;
     typedef std::pair<std::pair<int, int>, std::shared_ptr<Edge> > EEntry;
 
 public:
@@ -48,7 +48,6 @@ public:
     int v();                        // returns the number of vertices
     int e();                        // returns the number of edges
     std::set<int> listVertices();   // returns the set of vertex ids
-    VTable& get_vtable();           // returns the vertex table of the graph
 
     friend std::ostream& operator<<(std::ostream& stream, const Graph& g);
 
@@ -56,11 +55,10 @@ public:
 
 private:
     AdjacencyTable atable;
-    VTable vtable;
+    VertexTable vtable;
     EdgeTable etable;
 
     // private methods
-    VTable& _rebuildVtable();
 
 };
 

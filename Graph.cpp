@@ -14,14 +14,10 @@
 
 Graph &Graph::operator+(int v) {
 
-    if (atable.contains(v)) {
-        return *this;
-    }
-
     atable+v;
-    vtable.insert( std::pair<int, std::unique_ptr<Vertex> >(v, std::unique_ptr<Vertex>(new Vertex(v))));
-    return *this;
+    vtable+v;
 
+    return *this;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Graph &g) {
@@ -64,7 +60,7 @@ Graph &Graph::operator-(int v) {
     }
 
     atable-v;
-    vtable.erase(v);
+    vtable-v;
 
     return *this;
 }
@@ -104,20 +100,6 @@ Graph &Graph::clearEdges() {
     return *this;
 }
 
-Graph::VTable &Graph::_rebuildVtable() {
-    NList vertices;
-
-    for( auto const& v : vertices) {
-        vertices.insert(v);
-    }
-
-    vtable.clear();
-    for( auto const& v : vertices) {
-        vtable.insert(std::pair<int, std::unique_ptr<Vertex> >(v, std::unique_ptr<Vertex>(new Vertex(v))));
-    }
-
-    return vtable;
-}
 
 Graph &Graph::complete() {
     NList all;
@@ -263,9 +245,6 @@ Graph &Graph::operator=(Graph const &g) {
     return *this;
 }
 
-Graph::VTable &Graph::get_vtable() {
-    return vtable;
-}
 
 
 
