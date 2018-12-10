@@ -2,6 +2,7 @@
 #include "Vertex.h"
 #include "Graph.h"
 #include "AdjacencyTable.h"
+#include "EdgeTable.h"
 #include <list>
 
 typedef std::pair<int, int> E;
@@ -11,29 +12,14 @@ using std::cout;
 using std::endl;
 
 int main() {
+    EdgeTable et;
+    et+E(2,3);
+    cout << (et[E(2,3)]).v1;
+    et-E(2,3);
 
-    Graph K('K', 6);
-    //K.relabelAll(7, 12);
-    std::cout << K << std::endl;
-    std::cout << K.e() << std::endl;
+    cout << et.size();
 
-    Graph C('C', 5);
-    C+E(2,5);
-    C|E(2,3);
-    std::cout << C << std::endl;
-    std::cout << C.e() <<std::endl;
-//    std::cout << C.listVertices() << std::endl;
 
-    Graph A;
-    A = C;
-    cout << A << endl;
-
-    //A.relabelVertex(2,9);
-
-    cout << A << endl;
-
-    cout << A.get_vtable().size();
-    cout << A.e();
 
     return 0;
 }

@@ -7,6 +7,7 @@
 
 #include "AdjacencyTable.h"
 #include "Edge.h"
+#include "EdgeTable.h"
 #include <list>
 #include <memory>
 
@@ -44,25 +45,22 @@ public:
     Graph& clearEdges();                // removes every edge
 
     // graph accessors
-    int v();            // returns the number of vertices
-    int e();            // returns the number of edges
-    std::set<int> listVertices();    // returns the set of vertex ids
+    int v();                        // returns the number of vertices
+    int e();                        // returns the number of edges
+    std::set<int> listVertices();   // returns the set of vertex ids
+    VTable& get_vtable();           // returns the vertex table of the graph
 
     friend std::ostream& operator<<(std::ostream& stream, const Graph& g);
 
-    VTable& get_vtable();
+
 
 private:
     AdjacencyTable atable;
     VTable vtable;
-    ETable etable;
+    EdgeTable etable;
 
     // private methods
     VTable& _rebuildVtable();
-    ETable& _rebuildEtable();
-
-
-
 
 };
 

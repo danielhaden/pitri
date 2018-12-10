@@ -17,8 +17,10 @@ public:
     // mutators
     EdgeTable& operator+(E edge);
     EdgeTable& operator-(E edge);
+    EdgeTable& clear();
 
     // accessors
+    Edge& operator[](E edge);
     bool contains(E edge);
     int size();
 

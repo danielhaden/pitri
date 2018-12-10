@@ -33,6 +33,7 @@ struct AdjacencyTable {
     AdjacencyTable& operator-(E edge); // removes an edge
     AdjacencyTable& complete();        // introduces every edge to the graph
     AdjacencyTable& operator!();       // constructs the complement
+    AdjacencyTable& clearEdges();      // removes all adjacencies, keeps vertices
 
     AdjacencyTable& operator=(const AdjacencyTable& at); // overloaded assignment operator
 

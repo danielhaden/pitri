@@ -9,7 +9,7 @@
 #include "IDCollisionException.h"
 #include "OutOfRangeException.h"
 #include <memory>
-
+#include <algorithm>
 
 
 Graph &Graph::operator+(int v) {
@@ -30,6 +30,8 @@ std::ostream &operator<<(std::ostream &stream, const Graph &g) {
 }
 
 Graph &Graph::operator+(Graph::E edge) {
+    int v1 = std::min(edge.first, edge.second);
+    int v2 = std::max(edge.first, edge.second);
 
     // check that edge is not already in graph
     if(atable.contains(edge)) {
@@ -48,7 +50,7 @@ Graph &Graph::operator+(Graph::E edge) {
     }
 
     // add edge
-    etable.insert(EEntry(edge, std::shared_ptr<Edge>(new Edge(edge.first, edge.second))));
+    etable+edge;
     atable+edge;
 
     return *this;
@@ -74,7 +76,7 @@ Graph &Graph::operator-(Graph::E edge) {
     }
 
     atable-edge;
-    etable.erase(edge);
+    etable-edge;
 
     return *this;
 }
@@ -90,17 +92,15 @@ int Graph::e() {
 Graph &Graph::operator!() {
     etable.clear();
     !atable;
-    _rebuildEtable();
 
     return *this;
 }
 
 Graph &Graph::clearEdges() {
 
-    for( auto const& e : etable) {
-        atable-(e.first);
-        etable.erase(e.first);
-    }
+    atable.clearEdges();
+    etable.clear();
+
     return *this;
 }
 
@@ -117,25 +117,6 @@ Graph::VTable &Graph::_rebuildVtable() {
     }
 
     return vtable;
-}
-
-Graph::ETable &Graph::_rebuildEtable() {
-
-    etable.clear();
-
-
-    for( auto const& v : atable.atable) {
-
-        for( auto const& u : atable.atable[v.first]) {
-            E e(u, v.first);
-
-            if (v.first < u) {
-                continue;
-            }
-            etable.insert(std::pair<E, std::unique_ptr<Edge> >(e, std::unique_ptr<Edge>(new Edge(e.first, e.second))));
-        }
-    }
-    return etable;
 }
 
 Graph &Graph::complete() {
@@ -156,7 +137,7 @@ Graph &Graph::complete() {
 
             // add an edge if it isn't already in the graph. Edges already in the
             // graph are untouched to preserve coloring and embedding properties
-            if ( etable.find(std::pair<int,int>(u,v)) == etable.end() ) {
+            if ( etable.contains(E(u,v)) ) {
                 operator+(E(u,v));
             }
 
@@ -191,28 +172,6 @@ Graph::Graph(const char c, int order) {
 }
 
 Graph &Graph::relabelVertex(int from, int to) {
-    NList neighbors = atable.atable[from];
-
-    // update the adjacency table (error checking occurs here)
-    atable.relabel(from, to);
-
-    // update the vertex table
-    vtable[from]->id = to;
-    vtable.insert(VEntry(to, vtable[from]));
-    vtable.erase(from);
-
-    // update the edge table
-    for (auto const& n : neighbors) {
-
-        // update edge object
-        std::shared_ptr<Edge> ptr;
-        ptr = etable[E(std::min(from, n), std::max(from, n))];
-        ptr->move(from, to);
-
-        // update etable and delete old entry
-        etable.insert(EEntry(E( std::min(to, n), std::max(to, n) ), ptr));
-        etable.erase(std::pair<int, int>( std::min(to, n), std::max(to, n) ));
-    }
 
     return *this;
 }
@@ -231,7 +190,25 @@ Graph &Graph::relabelAll(int start, int finish) {
         new_labels.insert(i);
     }
 
-    // NOT COMPLETE NEEDS WORK
+    // find original ids to change
+    std::set<int> diff1;
+    std::set_difference(vertices.begin(), vertices.end(),
+            new_labels.begin(), new_labels.end(),
+            std::inserter(diff1, diff1.end()));
+
+    // find new labels for ids to change
+    std::set<int> diff2;
+    std::set_difference(new_labels.begin(), new_labels.end(),
+                        vertices.begin(), vertices.end(),
+                        std::inserter(diff2, diff2.end()));
+
+    for (auto const& id : diff1) {
+        std::cout << id << ", " << *diff2.begin() << std::endl;
+
+        //relabelVertex(id, *(diff2.begin()) );
+
+        diff2.erase(*(diff2.begin()));
+    }
 
     return *this;
 }
@@ -248,7 +225,7 @@ std::set<int> Graph::listVertices() {
 Graph &Graph::operator|(Graph::E edge) {
 
     // check that edge is in graph
-    if (etable.find(edge) == etable.end()) {
+    if (etable.contains(edge)) {
         throw OutOfRangeException();
     }
 
@@ -289,5 +266,7 @@ Graph &Graph::operator=(Graph const &g) {
 Graph::VTable &Graph::get_vtable() {
     return vtable;
 }
+
+
 
 

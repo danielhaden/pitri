@@ -47,3 +47,12 @@ EdgeTable &EdgeTable::operator-(EdgeTable::E edge) {
 int EdgeTable::size() {
     return table.size();
 }
+
+EdgeTable &EdgeTable::clear() {
+    table.clear();
+    return *this;
+}
+
+Edge &EdgeTable::operator[](EdgeTable::E edge) {
+    return *(table[edge]);
+}

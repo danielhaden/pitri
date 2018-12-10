@@ -168,3 +168,9 @@ AdjacencyTable &AdjacencyTable::operator=(const AdjacencyTable &at) {
 
     return *this;
 }
+
+AdjacencyTable &AdjacencyTable::clearEdges() {
+    for (auto & entry : atable) {
+        entry.second = NList();
+    }
+}
