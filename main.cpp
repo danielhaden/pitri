@@ -28,11 +28,12 @@ int main() {
     A = C;
     cout << A << endl;
 
-    A.relabelVertex(1,7);
-    A.relabelVertex(2,7);
+    //A.relabelVertex(2,9);
+
     cout << A << endl;
 
     cout << A.get_vtable().size();
+    cout << A.e();
 
     return 0;
 }

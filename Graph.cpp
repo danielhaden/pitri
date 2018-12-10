@@ -191,40 +191,29 @@ Graph::Graph(const char c, int order) {
 }
 
 Graph &Graph::relabelVertex(int from, int to) {
-    std::cout << vtable.size();
-
-    for (auto const& entry : vtable) {
-        std::cout << "HERE " << entry.first << std::endl;
-    }
-
     NList neighbors = atable.atable[from];
 
     // update the adjacency table (error checking occurs here)
-    //atable.relabel(from, to);
+    atable.relabel(from, to);
 
     // update the vertex table
-    //vtable[from]->id = to;
-    //vtable.insert(VEntry(to, vtable[from]));
+    vtable[from]->id = to;
+    vtable.insert(VEntry(to, vtable[from]));
+    vtable.erase(from);
 
+    // update the edge table
+    for (auto const& n : neighbors) {
 
-    //vtable.erase(from);
+        // update edge object
+        std::shared_ptr<Edge> ptr;
+        ptr = etable[E(std::min(from, n), std::max(from, n))];
+        ptr->move(from, to);
 
-   // std::shared_ptr<Vertex> ptr = vtable.at(to);
-    //std::cout << "here " << ptr.get();
+        // update etable and delete old entry
+        etable.insert(EEntry(E( std::min(to, n), std::max(to, n) ), ptr));
+        etable.erase(std::pair<int, int>( std::min(to, n), std::max(to, n) ));
+    }
 
-
-//    // update the edge table
-//    for (auto const& n : neighbors) {
-//
-//        // update edge object
-//        std::shared_ptr<Edge> ptr;
-//        ptr = etable[E(std::min(from, n), std::max(from, n))];
-//        ptr->move(from, to);
-//
-//        // update etable and delete old entry
-//        etable.insert(EEntry(E( std::min(to, n), std::max(to, n) ), ptr));
-//        etable.erase(std::pair<int, int>( std::min(to, n), std::max(to, n) ));
-//    }
     return *this;
 }
 
@@ -287,7 +276,7 @@ Graph &Graph::operator=(Graph const &g) {
     // create new vertex and edge objects for new graph copy
     for (auto const& v : g.atable.atable) {
         for (auto const& u : v.second) {
-            *this+(v, u);
+            (*this)+E(u, v.first);
         }
     }
 
