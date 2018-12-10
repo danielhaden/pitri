@@ -19,6 +19,9 @@ struct Vertex {
     std::string tag;
     int color;
 
+    // mutators
+    void setID(int _id);
+
 };
 
 

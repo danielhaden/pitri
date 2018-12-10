@@ -13,7 +13,7 @@ using std::endl;
 int main() {
 
     Graph K('K', 6);
-    K.relabelAll(7, 12);
+    //K.relabelAll(7, 12);
     std::cout << K << std::endl;
     std::cout << K.e() << std::endl;
 
@@ -27,6 +27,12 @@ int main() {
     Graph A;
     A = C;
     cout << A << endl;
+
+    A.relabelVertex(1,7);
+    A.relabelVertex(2,7);
+    cout << A << endl;
+
+    cout << A.get_vtable().size();
 
     return 0;
 }

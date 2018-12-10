@@ -11,6 +11,10 @@ Vertex::Vertex(int num) {
 
 Vertex::Vertex() {
     color = -1;
+}
 
+void Vertex::setID(int _id) {
+    id = _id;
+    return;
 }
 

@@ -50,6 +50,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& stream, const Graph& g);
 
+    VTable& get_vtable();
+
 private:
     AdjacencyTable atable;
     VTable vtable;

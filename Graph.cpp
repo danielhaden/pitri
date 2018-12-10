@@ -191,28 +191,40 @@ Graph::Graph(const char c, int order) {
 }
 
 Graph &Graph::relabelVertex(int from, int to) {
+    std::cout << vtable.size();
+
+    for (auto const& entry : vtable) {
+        std::cout << "HERE " << entry.first << std::endl;
+    }
+
     NList neighbors = atable.atable[from];
 
     // update the adjacency table (error checking occurs here)
-    atable.relabel(from, to);
+    //atable.relabel(from, to);
 
     // update the vertex table
-    vtable[from]->id = to;
-    vtable.insert(VEntry(to, vtable[from]));
-    vtable.erase(from);
+    //vtable[from]->id = to;
+    //vtable.insert(VEntry(to, vtable[from]));
 
-    // update the edge table
-    for (auto const& n : neighbors) {
 
-        // update edge object
-        std::shared_ptr<Edge> ptr;
-        ptr = etable[E(std::min(from, n), std::max(from, n))];
-        ptr->move(from, to);
+    //vtable.erase(from);
 
-        // update etable and delete old entry
-        etable.insert(EEntry(E( std::min(to, n), std::max(to, n) ), ptr));
-        etable.erase(std::pair<int, int>( std::min(to, n), std::max(to, n) ));
-    }
+   // std::shared_ptr<Vertex> ptr = vtable.at(to);
+    //std::cout << "here " << ptr.get();
+
+
+//    // update the edge table
+//    for (auto const& n : neighbors) {
+//
+//        // update edge object
+//        std::shared_ptr<Edge> ptr;
+//        ptr = etable[E(std::min(from, n), std::max(from, n))];
+//        ptr->move(from, to);
+//
+//        // update etable and delete old entry
+//        etable.insert(EEntry(E( std::min(to, n), std::max(to, n) ), ptr));
+//        etable.erase(std::pair<int, int>( std::min(to, n), std::max(to, n) ));
+//    }
     return *this;
 }
 
@@ -272,16 +284,21 @@ Graph &Graph::operator=(Graph const &g) {
         return *this;
     }
 
-    // copy
-    this->atable = g.atable;
-
     // create new vertex and edge objects for new graph copy
-    for (auto const& v : (this->atable).atable) {
+    for (auto const& v : g.atable.atable) {
         for (auto const& u : v.second) {
             *this+(v, u);
         }
     }
+
+    // copy
+    atable = g.atable;
+
     return *this;
+}
+
+Graph::VTable &Graph::get_vtable() {
+    return vtable;
 }
 
 
