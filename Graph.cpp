@@ -26,24 +26,15 @@ std::ostream &operator<<(std::ostream &stream, const Graph &g) {
 }
 
 Graph &Graph::operator+(Graph::E edge) {
-    int v1 = std::min(edge.first, edge.second);
-    int v2 = std::max(edge.first, edge.second);
 
     // check that edge is not already in graph
     if(atable.contains(edge)) {
         return *this;
     }
 
-    // add vertices
+    // add vertices (does nothing if vertex is already present)
     operator+(edge.first);
     operator+(edge.second);
-
-    // lower vertex is always first
-    if (edge.first > edge.second) {
-        int tmp = edge.second;
-        edge.second = edge.first;
-        edge.first = tmp;
-    }
 
     // add edge
     etable+edge;
@@ -86,8 +77,15 @@ int Graph::e() {
 }
 
 Graph &Graph::operator!() {
-    etable.clear();
+
+    // take complement of atable
     !atable;
+
+    etable.clear();
+
+
+
+
 
     return *this;
 }
@@ -119,12 +117,8 @@ Graph &Graph::complete() {
 
             // add an edge if it isn't already in the graph. Edges already in the
             // graph are untouched to preserve coloring and embedding properties
-            if ( etable.contains(E(u,v)) ) {
-                operator+(E(u,v));
-            }
-
+            operator+(E(u,v));
         }
-
     }
     return *this;
 }
@@ -135,7 +129,7 @@ Graph::Graph(const char c, int order) {
 
         // generate vertices
         for (int i = 1; i <= order; i++) {
-            *this+i;
+            operator+(i);
         }
         complete();
 
@@ -143,10 +137,10 @@ Graph::Graph(const char c, int order) {
 
         // generate vertices and edges
         for (int i = 1; i < order; i++) {
-            *this+(E(i, i+1));
+            operator+(E(i, i+1));
         }
         // generate final edge
-        *this+E(1, order);
+        operator+(E(1, order));
 
     } else {
         throw ConstructorException();
@@ -154,6 +148,8 @@ Graph::Graph(const char c, int order) {
 }
 
 Graph &Graph::relabelVertex(int from, int to) {
+
+    // NEED ADJACENCY TABLE EDGE ITERATOR
 
     return *this;
 }

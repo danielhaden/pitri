@@ -3,6 +3,7 @@
 //
 
 #include "VertexTable.h"
+#include "OutOfRangeException.h"
 
 VertexTable &VertexTable::operator+(int vertex) {
 
@@ -51,4 +52,17 @@ Vertex &VertexTable::operator[](int vertex) {
 
 int VertexTable::size() {
     return table.size();
+}
+
+VertexTable &VertexTable::relabel(int from, int to) {
+
+    if (!contains(from)) {
+        throw OutOfRangeException();
+    }
+
+    table.insert(std::pair<int, std::shared_ptr<Vertex> >(to, table[from]));
+    table[to]->id = to;
+    table.erase(from);
+
+    return *this;
 }

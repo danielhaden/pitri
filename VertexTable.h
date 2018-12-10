@@ -18,6 +18,7 @@ public:
     VertexTable& operator+(int vertex);
     VertexTable& operator-(int vertex);
     VertexTable& clear();
+    VertexTable& relabel(int from, int to);
 
     // accessors
     Vertex& operator[](int vertex);

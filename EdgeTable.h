@@ -8,26 +8,31 @@
 
 #include <map>
 #include <memory>
+#include <set>
 #include "Edge.h"
 
 class EdgeTable {
-    typedef std::pair<int, int> E;
-
 public:
+    typedef std::pair<int, int> E;
+    typedef std::set< std::shared_ptr<Edge> > pointer_set;
+
     // mutators
     EdgeTable& operator+(E edge);
     EdgeTable& operator-(E edge);
     EdgeTable& clear();
+    EdgeTable& relabel(std::shared_ptr<Edge> e_ptr, E edge);
 
     // accessors
     Edge& operator[](E edge);
+    pointer_set operator[](int vertex);
+
+
+
     bool contains(E edge);
     int size();
 
 private:
     std::map<std::pair<int,int>, std::shared_ptr<Edge> > table;
-
-
 };
 
 

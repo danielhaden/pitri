@@ -10,7 +10,8 @@
 
 AdjacencyTable &AdjacencyTable::operator+(int v) {
 
-    if (atable.find(v) != atable.end()) {
+    // add vertex if not already present
+    if (atable.find(v) == atable.end()) {
         atable.insert(std::pair<int, NList>(v, NList()));
     }
 
@@ -20,8 +21,8 @@ AdjacencyTable &AdjacencyTable::operator+(int v) {
 AdjacencyTable &AdjacencyTable::operator+(E edge) {
 
     // add vertices if not present
-    atable.insert( std::pair< int, NList >( edge.first,  NList() ));
-    atable.insert( std::pair< int, NList >( edge.second, NList() ));
+    operator+(edge.first);
+    operator+(edge.second);
 
     if ( edge.first == edge.second ) {
         throw LoopException();

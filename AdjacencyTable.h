@@ -45,4 +45,5 @@ struct AdjacencyTable {
 };
 
 
+
 #endif //PITRI_ADJACENCYTABLE_H

@@ -16,14 +16,9 @@ class Graph {
     typedef std::pair<int, int> E;   // undirected edge typedef
     typedef std::set<int> NList;
 
-    typedef std::map<int, std::shared_ptr<Vertex> > VTable;
-    typedef std::pair<int, std::shared_ptr<Vertex> > VEntry;
-
-    typedef std::pair<std::pair<int, int>, std::shared_ptr<Edge> > EEntry;
-
 public:
     // constructors
-    Graph() = default;;
+    Graph() = default;
     Graph(char c, int order);
 
     // vertex operators

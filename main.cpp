@@ -13,14 +13,11 @@ using std::cout;
 using std::endl;
 
 int main() {
-    VertexTable vt;
-    vt+3;
-    vt+6;
-    vt-3;
-    vt-2;
-    cout << vt.contains(6) << vt.contains(2);
-    cout << vt.size();
-    cout << vt.clear().size();
+    Graph g('K', 6);
+    cout << g;
+
+    g.relabelVertex(4,9);
+
 
 
 

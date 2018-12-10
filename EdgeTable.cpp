@@ -3,6 +3,8 @@
 //
 
 #include "EdgeTable.h"
+#include "OutOfRangeException.h"
+#include "IDCollisionException.h"
 
 bool EdgeTable::contains(EdgeTable::E edge) {
 
@@ -55,4 +57,29 @@ EdgeTable &EdgeTable::clear() {
 
 Edge &EdgeTable::operator[](EdgeTable::E edge) {
     return *(table[edge]);
+}
+
+
+
+EdgeTable::pointer_set EdgeTable::operator[](int vertex) {
+    pointer_set edges;
+
+    for (auto const& edge : table ) {
+        if ((vertex == edge.first.first) | (vertex == edge.first.second)) {
+            edges.insert(edge.second);
+        }
+    }
+    return edges;
+}
+
+EdgeTable &EdgeTable::relabel(std::shared_ptr<Edge> e_ptr, EdgeTable::E edge) {
+    E from = E(e_ptr->v1, e_ptr->v2);
+
+    e_ptr->v1 = std::min(edge.first, edge.second);
+    e_ptr->v2 = std::max(edge.first, edge.second);
+
+    table.insert(std::pair<E, std::shared_ptr<Edge> >(edge, e_ptr));
+    table.erase(from);
+
+    return *this;
 }
