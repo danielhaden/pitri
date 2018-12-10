@@ -20,7 +20,6 @@ struct Edge {
     bool directed;
     int color;
     int direction;
-
 };
 
 

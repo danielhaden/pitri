@@ -229,6 +229,9 @@ Graph &Graph::relabelAll(int start, int finish) {
     for (int i = start; i <= finish; i++) {
         new_labels.insert(i);
     }
+
+    // NOT COMPLETE NEEDS WORK
+
     return *this;
 }
 
@@ -259,6 +262,25 @@ Graph &Graph::operator|(Graph::E edge) {
     // delete v2
     *this-edge.second;
 
+    return *this;
+}
+
+Graph &Graph::operator=(Graph const &g) {
+
+    // self-assignment guard
+    if (this == &g) {
+        return *this;
+    }
+
+    // copy
+    this->atable = g.atable;
+
+    // create new vertex and edge objects for new graph copy
+    for (auto const& v : (this->atable).atable) {
+        for (auto const& u : v.second) {
+            *this+(v, u);
+        }
+    }
     return *this;
 }
 
