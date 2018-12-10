@@ -34,6 +34,8 @@ struct AdjacencyTable {
     AdjacencyTable& complete();        // introduces every edge to the graph
     AdjacencyTable& operator!();       // constructs the complement
 
+    AdjacencyTable& operator=(const AdjacencyTable& at); // overloaded assignment operator
+
     // accessors
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyTable& at);
     bool contains(int v);

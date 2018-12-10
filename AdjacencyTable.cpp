@@ -155,3 +155,16 @@ AdjacencyTable &AdjacencyTable::relabel(int from, int to) {
     }
     return *this;
 }
+
+AdjacencyTable &AdjacencyTable::operator=(const AdjacencyTable &at) {
+
+    // self-assignment guard
+    if (this == &at) {
+        return *this;
+    }
+
+    // copy
+    atable = at.atable;
+
+    return *this;
+}
