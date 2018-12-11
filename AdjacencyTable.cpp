@@ -93,14 +93,18 @@ AdjacencyTable &AdjacencyTable::complete() {
     NList all;
 
     // get all vertices in table
-    for( auto const& v : table) {
-        all.insert(v.first);
+    for( auto const& entry : table)
+        all.insert(entry.first);
+
+    // generate all possible edges
+    for( auto const& v : all) {
+        for( auto const& u : all ) {
+            if (u < v) {
+                operator+(E(u,v));
+            }
+        }
     }
 
-    // set neighbors as every vertex for each vertex
-    for( auto const& v : all) {
-        table[v] = all;
-    }
     return *this;
 }
 

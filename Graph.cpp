@@ -89,24 +89,30 @@ Graph &Graph::clearEdges() {
 Graph &Graph::complete() {
     NList all;
 
-    // get all neighbors
-    for (auto const& v : atable.table) {
-        all.insert(v.first);
+    atable.complete();
+
+    for (auto const& edge : atable.getEdges()) {
+        etable+(edge);
     }
 
-    for (auto const& v : all ) {
-        for (auto const & u : all) {
-
-            // generate ordered pairs (u,v) s.t. u < v
-            if (u >= v) {
-                break;
-            }
-
-            // add an edge if it isn't already in the graph. Edges already in the
-            // graph are untouched to preserve coloring and embedding properties
-            operator+(E(u,v));
-        }
-    }
+//    // get all neighbors
+//    for (auto const& v : atable.table) {
+//        all.insert(v.first);
+//    }
+//
+//    for (auto const& v : all ) {
+//        for (auto const & u : all) {
+//
+//            // generate ordered pairs (u,v) s.t. u < v
+//            if (u >= v) {
+//                break;
+//            }
+//
+//            // add an edge if it isn't already in the graph. Edges already in the
+//            // graph are untouched to preserve coloring and embedding properties
+//            operator+(E(u,v));
+//        }
+//    }
     return *this;
 }
 

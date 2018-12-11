@@ -27,11 +27,12 @@ int main() {
     cout << g.v() << endl;
     cout << g;
 
-    Graph K('K', 6);
-    !K;
-    cout << K.e();
+    cout << g.complete().e() << endl;
+    cout << g << endl;
 
     g.relabelVertex(4,9);
+
+
 
 
 
