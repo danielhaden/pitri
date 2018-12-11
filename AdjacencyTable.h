@@ -42,6 +42,7 @@ public:
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyTable& at);
     bool contains(int v);
     bool contains(E edge);
+    std::map<int, NList>& getTable();
 
     // members
     std::map<int, NList> table;

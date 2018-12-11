@@ -14,23 +14,23 @@ using std::endl;
 
 int main() {
     Graph g;
+    cout << g.e() << endl;
     g+E(2,4);
+    cout << g.e() << endl;
     g+E(2,3);
+    cout << g.e() << endl;
     g+E(3,4);
+    cout << g.e() << endl;
     g+E(4,5);
+    cout << g.e() << endl;
     g+E(4,5);
+    cout << g.e() << endl;
     g-E(4,5);
+    cout << g.e() << endl;
     g-E(1,8);
-    g-9;
-    cout << g;
-    !g;
-    cout << g.v() << endl;
-    cout << g;
+    cout << g.e() << endl;
 
-    cout << g.complete().e() << endl;
-    cout << g << endl;
 
-    g.relabelVertex(4,9);
 
 
 

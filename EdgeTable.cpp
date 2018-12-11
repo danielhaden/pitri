@@ -83,3 +83,19 @@ EdgeTable &EdgeTable::relabel(std::shared_ptr<Edge> e_ptr, EdgeTable::E edge) {
 
     return *this;
 }
+
+EdgeTable &EdgeTable::operator=(const EdgeTable &rhs) {
+
+    // self-assignment guard
+    if (this == &rhs ) {
+        return *this;
+    }
+
+    table = rhs.table;
+
+    return *this;
+}
+
+std::map<std::pair<int, int>, std::shared_ptr<Edge> > &EdgeTable::getTable() {
+    return table;
+}

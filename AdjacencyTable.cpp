@@ -205,3 +205,8 @@ AdjacencyTable::Edge_set AdjacencyTable::getEdges() {
     }
     return set;
 }
+
+std::map<int, AdjacencyTable::NList>& AdjacencyTable::getTable() {
+    return table;
+}
+

@@ -42,7 +42,7 @@ public:
     // graph accessors
     int v();                        // returns the number of vertices
     int e();                        // returns the number of edges
-    std::set<int> listVertices();   // returns the set of vertex ids
+    std::set<int> VertexIDSet();   // returns the set of vertex ids
 
     friend std::ostream& operator<<(std::ostream& stream, const Graph& g);
 

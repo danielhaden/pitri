@@ -25,8 +25,9 @@ public:
     // accessors
     Edge& operator[](E edge);
     pointer_set operator[](int vertex);
+    std::map<std::pair<int,int>, std::shared_ptr<Edge> >& getTable();
 
-
+    EdgeTable& operator=(const EdgeTable& rhs);
 
     bool contains(E edge);
     int size();

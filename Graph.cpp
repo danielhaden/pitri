@@ -87,7 +87,6 @@ Graph &Graph::clearEdges() {
 
 
 Graph &Graph::complete() {
-    NList all;
 
     atable.complete();
 
@@ -95,24 +94,6 @@ Graph &Graph::complete() {
         etable+(edge);
     }
 
-//    // get all neighbors
-//    for (auto const& v : atable.table) {
-//        all.insert(v.first);
-//    }
-//
-//    for (auto const& v : all ) {
-//        for (auto const & u : all) {
-//
-//            // generate ordered pairs (u,v) s.t. u < v
-//            if (u >= v) {
-//                break;
-//            }
-//
-//            // add an edge if it isn't already in the graph. Edges already in the
-//            // graph are untouched to preserve coloring and embedding properties
-//            operator+(E(u,v));
-//        }
-//    }
     return *this;
 }
 
@@ -148,7 +129,7 @@ Graph &Graph::relabelVertex(int from, int to) {
 }
 
 Graph &Graph::relabelAll(int start, int finish) {
-    NList vertices = listVertices();
+    NList vertices = VertexIDSet();
 
     // check that range is valid for graph
     if (vertices.size() != (finish - start + 1)) {
@@ -184,7 +165,7 @@ Graph &Graph::relabelAll(int start, int finish) {
     return *this;
 }
 
-std::set<int> Graph::listVertices() {
+std::set<int> Graph::VertexIDSet() {
     NList vertices;
 
     for (auto const& v : atable.table) {
@@ -196,8 +177,8 @@ std::set<int> Graph::listVertices() {
 Graph &Graph::operator|(Graph::E edge) {
 
     // check that edge is in graph
-    if (etable.contains(edge)) {
-        throw OutOfRangeException();
+    if (!etable.contains(edge)) {
+        return *this;
     }
 
     // get adjacencies of v2
@@ -230,6 +211,9 @@ Graph &Graph::operator=(Graph const &g) {
 
     // copy
     atable = g.atable;
+    vtable = g.vtable;
+    etable = g.etable;
+
 
     return *this;
 }

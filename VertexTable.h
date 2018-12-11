@@ -20,10 +20,13 @@ public:
     VertexTable& clear();
     VertexTable& relabel(int from, int to);
 
+    VertexTable& operator=(const VertexTable& rhs);
+
     // accessors
     Vertex& operator[](int vertex);
     bool contains(int vertex);
     int size();
+    std::map<int, std::shared_ptr<Vertex> >& getTable();
 
 private:
     std::map<int, std::shared_ptr<Vertex> > table;

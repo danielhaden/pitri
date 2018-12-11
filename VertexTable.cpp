@@ -66,3 +66,19 @@ VertexTable &VertexTable::relabel(int from, int to) {
 
     return *this;
 }
+
+VertexTable &VertexTable::operator=(const VertexTable &rhs) {
+
+    // self-assignment guard
+    if (this == &rhs ) {
+        return *this;
+    }
+
+    table = rhs.table;
+
+    return *this;
+}
+
+std::map<int, std::shared_ptr<Vertex> > &VertexTable::getTable() {
+    return table;
+}
