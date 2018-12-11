@@ -20,6 +20,7 @@ class AdjacencyTable {
 public:
     typedef std::set<int> NList;
     typedef std::pair<int, int> E;
+    typedef std::set<std::pair<int, int> > Edge_set;
 
 
     // vertex operators
@@ -33,6 +34,7 @@ public:
     AdjacencyTable& complete();        // introduces every edge to the graph
     AdjacencyTable& operator!();       // constructs the complement
     AdjacencyTable& clearEdges();      // removes all adjacencies, keeps vertices
+    Edge_set getEdges();               // returns all edges
 
     AdjacencyTable& operator=(const AdjacencyTable& at); // overloaded assignment operator
 

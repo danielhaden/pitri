@@ -188,3 +188,16 @@ AdjacencyTable &AdjacencyTable::clearEdges() {
         entry.second = NList();
     }
 }
+
+AdjacencyTable::Edge_set AdjacencyTable::getEdges() {
+    Edge_set set;
+
+    for (auto const& entry : table) {
+        for (auto const& u : entry.second) {
+            if (u < entry.first) {
+                set.insert(E(u,entry.first));
+            }
+        }
+    }
+    return set;
+}

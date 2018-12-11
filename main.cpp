@@ -22,8 +22,14 @@ int main() {
     g-E(4,5);
     g-E(1,8);
     g-9;
+    cout << g;
+    !g;
     cout << g.v() << endl;
     cout << g;
+
+    Graph K('K', 6);
+    !K;
+    cout << K.e();
 
     g.relabelVertex(4,9);
 

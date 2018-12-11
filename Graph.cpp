@@ -70,9 +70,9 @@ Graph &Graph::operator!() {
 
     etable.clear();
 
-
-    // NEED TO COMPLETE
-
+    for (auto const& edge : atable.getEdges()) {
+        etable+(edge);
+    }
 
     return *this;
 }
