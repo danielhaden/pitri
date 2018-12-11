@@ -27,28 +27,15 @@ std::ostream &operator<<(std::ostream &stream, const Graph &g) {
 
 Graph &Graph::operator+(Graph::E edge) {
 
-    // check that edge is not already in graph
-    if(atable.contains(edge)) {
-        return *this;
-    }
-
-    // add vertices (does nothing if vertex is already present)
-    operator+(edge.first);
-    operator+(edge.second);
-
-    // add edge
     etable+edge;
     atable+edge;
+    vtable+edge.first;
+    vtable+edge.second;
 
     return *this;
-
 }
 
 Graph &Graph::operator-(int v) {
-
-    if (!atable.contains(v)) {
-        return *this;
-    }
 
     atable-v;
     vtable-v;
@@ -58,9 +45,9 @@ Graph &Graph::operator-(int v) {
 
 Graph &Graph::operator-(Graph::E edge) {
 
-    if (!atable.contains(edge)) {
-        return *this;
-    }
+//    if (!atable.contains(edge)) {
+//        return *this;
+//    }
 
     atable-edge;
     etable-edge;
@@ -78,13 +65,13 @@ int Graph::e() {
 
 Graph &Graph::operator!() {
 
-    // take complement of atable
+    // take complement of table
     !atable;
 
     etable.clear();
 
 
-
+    // NEED TO COMPLETE
 
 
     return *this;
@@ -103,7 +90,7 @@ Graph &Graph::complete() {
     NList all;
 
     // get all neighbors
-    for (auto const& v : atable.atable) {
+    for (auto const& v : atable.table) {
         all.insert(v.first);
     }
 
@@ -194,7 +181,7 @@ Graph &Graph::relabelAll(int start, int finish) {
 std::set<int> Graph::listVertices() {
     NList vertices;
 
-    for (auto const& v : atable.atable) {
+    for (auto const& v : atable.table) {
         vertices.insert(v.first);
     }
     return vertices;
@@ -208,7 +195,7 @@ Graph &Graph::operator|(Graph::E edge) {
     }
 
     // get adjacencies of v2
-    NList neighbors = atable.atable[edge.first];
+    NList neighbors = atable.table[edge.first];
 
     // add edges from v1 to v2's neighbors
     for (auto const& n : neighbors) {
@@ -229,7 +216,7 @@ Graph &Graph::operator=(Graph const &g) {
     }
 
     // create new vertex and edge objects for new graph copy
-    for (auto const& v : g.atable.atable) {
+    for (auto const& v : g.atable.table) {
         for (auto const& u : v.second) {
             (*this)+E(u, v.first);
         }

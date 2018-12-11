@@ -11,8 +11,8 @@
 AdjacencyTable &AdjacencyTable::operator+(int v) {
 
     // add vertex if not already present
-    if (atable.find(v) == atable.end()) {
-        atable.insert(std::pair<int, NList>(v, NList()));
+    if (table.find(v) == table.end()) {
+        table.insert(std::pair<int, NList>(v, NList()));
     }
 
     return *this;
@@ -29,23 +29,23 @@ AdjacencyTable &AdjacencyTable::operator+(E edge) {
     }
 
     // add each as adjacent to eachother
-    atable[edge.first].insert( edge.second );
-    atable[edge.second].insert( edge.first );
+    table[edge.first].insert( edge.second );
+    table[edge.second].insert( edge.first );
 }
 
 AdjacencyTable &AdjacencyTable::operator-(int v) {
 
-    if (atable.find(v) != atable.end()) {
+    if (table.find(v) != table.end()) {
 
-        NList neighbors = atable[v];
+        NList neighbors = table[v];
 
         // erase adjacency for all neighbors
         if (neighbors.size() != 0) {
             for (auto const &u : neighbors) {
-                atable[u].erase(v);
+                table[u].erase(v);
             }
         }
-        atable.erase(v);
+        table.erase(v);
     }
 
     return *this;
@@ -53,7 +53,7 @@ AdjacencyTable &AdjacencyTable::operator-(int v) {
 
 std::ostream &operator<<(std::ostream &stream, const AdjacencyTable &at) {
 
-    for ( auto const& v : at.atable ) {
+    for ( auto const& v : at.table ) {
 
         AdjacencyTable::NList neighbors = v.second;
         std::cout << v.first << ": ";
@@ -78,8 +78,14 @@ std::ostream &operator<<(std::ostream &stream, const AdjacencyTable &at) {
 }
 
 AdjacencyTable &AdjacencyTable::operator-(AdjacencyTable::E edge) {
-    atable[edge.first].erase(edge.second);
-    atable[edge.second].erase(edge.first);
+
+    // check that vertices are in table
+    if ((table.find(edge.first) == table.end()) | (table.find(edge.second) == table.end())) {
+        return *this;
+    }
+
+    table[edge.first].erase(edge.second);
+    table[edge.second].erase(edge.first);
     return *this;
 }
 
@@ -87,13 +93,13 @@ AdjacencyTable &AdjacencyTable::complete() {
     NList all;
 
     // get all vertices in table
-    for( auto const& v : atable) {
+    for( auto const& v : table) {
         all.insert(v.first);
     }
 
     // set neighbors as every vertex for each vertex
     for( auto const& v : all) {
-        atable[v] = all;
+        table[v] = all;
     }
     return *this;
 }
@@ -102,27 +108,27 @@ AdjacencyTable &AdjacencyTable::operator!() {
     NList all;
 
     // get all vertices in table
-    for( auto const& v : atable) {
+    for( auto const& v : table) {
         all.insert(v.first);
     }
 
     for( auto const& u : all) {
         NList difference;
         std::set_difference(all.begin(), all.end(),
-                atable[u].begin(), atable[u].end(),
+                table[u].begin(), table[u].end(),
                 std::inserter(difference, difference.end()));
 
         difference.erase(u);
-        atable[u] = difference;
+        table[u] = difference;
     }
     return *this;
 }
 
 bool AdjacencyTable::contains(int v) {
     std::map<int, NList>::iterator it;
-    it = atable.find(v);
+    it = table.find(v);
 
-    if (it != atable.end()) {
+    if (it != table.end()) {
         return true;
     }
     return false;
@@ -130,13 +136,13 @@ bool AdjacencyTable::contains(int v) {
 
 bool AdjacencyTable::contains(AdjacencyTable::E edge) {
     std::map<int, NList>::iterator it;
-    it = atable.find(edge.first);
+    it = table.find(edge.first);
 
-    if (it != atable.end()) {
+    if (it != table.end()) {
         std::set<int>::iterator jt;
-        jt = atable[edge.first].find(edge.second);
+        jt = table[edge.first].find(edge.second);
 
-        if (jt != atable[edge.first].end()) {
+        if (jt != table[edge.first].end()) {
             return true;
         }
     }
@@ -147,19 +153,19 @@ bool AdjacencyTable::contains(AdjacencyTable::E edge) {
 AdjacencyTable &AdjacencyTable::relabel(int from, int to) {
 
     // check that new id is not already used
-    if (atable.find(to) != atable.end()) {
+    if (table.find(to) != table.end()) {
         throw IDCollisionException();
     }
 
     // change key of vertex
-    NList neighbors = atable[from];
-    atable.insert(std::pair<int, NList> (to, neighbors));
-    atable.erase(from);
+    NList neighbors = table[from];
+    table.insert(std::pair<int, NList> (to, neighbors));
+    table.erase(from);
 
     // change adjacency name
     for (auto const& v : neighbors) {
-        atable[v].erase(from);
-        atable[v].insert(to);
+        table[v].erase(from);
+        table[v].insert(to);
     }
     return *this;
 }
@@ -172,13 +178,13 @@ AdjacencyTable &AdjacencyTable::operator=(const AdjacencyTable &at) {
     }
 
     // copy
-    atable = at.atable;
+    table = at.table;
 
     return *this;
 }
 
 AdjacencyTable &AdjacencyTable::clearEdges() {
-    for (auto & entry : atable) {
+    for (auto & entry : table) {
         entry.second = NList();
     }
 }

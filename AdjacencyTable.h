@@ -16,12 +16,11 @@
 // instead of in Graph.cpp                       //
 //###############################################//
 
-struct AdjacencyTable {
+class AdjacencyTable {
+public:
     typedef std::set<int> NList;
     typedef std::pair<int, int> E;
 
-    // members
-    std::map<int, NList> atable;
 
     // vertex operators
     AdjacencyTable& operator+(int v);           // adds a vertex (idempotent)
@@ -41,6 +40,9 @@ struct AdjacencyTable {
     friend std::ostream& operator<<(std::ostream& stream, const AdjacencyTable& at);
     bool contains(int v);
     bool contains(E edge);
+
+    // members
+    std::map<int, NList> table;
 
 };
 
