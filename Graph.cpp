@@ -123,7 +123,9 @@ Graph::Graph(const char c, int order) {
 
 Graph &Graph::relabelVertex(int from, int to) {
 
-    // NEED ADJACENCY TABLE EDGE ITERATOR
+    atable.relabel(from, to);
+    vtable.relabel(from, to);
+    etable.relabelVertex(from, to);
 
     return *this;
 }
@@ -143,23 +145,22 @@ Graph &Graph::relabelAll(int start, int finish) {
     }
 
     // find original ids to change
-    std::set<int> diff1;
+    std::set<int> diffFrom;
     std::set_difference(vertices.begin(), vertices.end(),
             new_labels.begin(), new_labels.end(),
-            std::inserter(diff1, diff1.end()));
+            std::inserter(diffFrom, diffFrom.end()));
 
     // find new labels for ids to change
-    std::set<int> diff2;
+    std::set<int> diffTo;
     std::set_difference(new_labels.begin(), new_labels.end(),
                         vertices.begin(), vertices.end(),
-                        std::inserter(diff2, diff2.end()));
+                        std::inserter(diffTo, diffTo.end()));
 
-    for (auto const& id : diff1) {
-        std::cout << id << ", " << *diff2.begin() << std::endl;
+    for (auto const& to : diffTo) {
+        int from = *(diffFrom.begin());
+        relabelVertex(from, to);
+        diffFrom.erase(diffFrom.begin());
 
-        //relabelVertex(id, *(diff2.begin()) );
-
-        diff2.erase(*(diff2.begin()));
     }
 
     return *this;
@@ -217,6 +218,7 @@ Graph &Graph::operator=(Graph const &g) {
 
     return *this;
 }
+
 
 
 

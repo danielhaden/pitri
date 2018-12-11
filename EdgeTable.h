@@ -15,14 +15,17 @@ class EdgeTable {
 public:
     typedef std::pair<int, int> E;
     typedef std::set< std::shared_ptr<Edge> > pointer_set;
+    typedef std::set<int> NList;
 
     // mutators
     EdgeTable& operator+(E edge);
     EdgeTable& operator-(E edge);
     EdgeTable& clear();
-    EdgeTable& relabel(std::shared_ptr<Edge> e_ptr, E edge);
+    EdgeTable& relabelVertex(int from, int to);
 
     // accessors
+    std::set<int> getVertices();
+
     Edge& operator[](E edge);
     pointer_set operator[](int vertex);
     std::map<std::pair<int,int>, std::shared_ptr<Edge> >& getTable();

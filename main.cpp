@@ -30,6 +30,12 @@ int main() {
     g-E(1,8);
     cout << g.e() << endl;
 
+    Graph k('K', 6);
+    k.relabelVertex(2,9);
+    cout << k << endl;
+    k.relabelAll(8,13);
+
+    cout << k << endl;
 
 
 

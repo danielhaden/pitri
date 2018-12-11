@@ -72,22 +72,10 @@ EdgeTable::pointer_set EdgeTable::operator[](int vertex) {
     return edges;
 }
 
-EdgeTable &EdgeTable::relabel(std::shared_ptr<Edge> e_ptr, EdgeTable::E edge) {
-    E from = E(e_ptr->v1, e_ptr->v2);
-
-    e_ptr->v1 = std::min(edge.first, edge.second);
-    e_ptr->v2 = std::max(edge.first, edge.second);
-
-    table.insert(std::pair<E, std::shared_ptr<Edge> >(edge, e_ptr));
-    table.erase(from);
-
-    return *this;
-}
-
 EdgeTable &EdgeTable::operator=(const EdgeTable &rhs) {
 
     // self-assignment guard
-    if (this == &rhs ) {
+    if ( this == &rhs ) {
         return *this;
     }
 
@@ -98,4 +86,39 @@ EdgeTable &EdgeTable::operator=(const EdgeTable &rhs) {
 
 std::map<std::pair<int, int>, std::shared_ptr<Edge> > &EdgeTable::getTable() {
     return table;
+}
+
+EdgeTable &EdgeTable::relabelVertex(int from, int to) {
+    NList vertices = getVertices();
+    if ((vertices.find(from) == vertices.end()) | (vertices.find(to) != vertices.end())) {
+        return *this;
+    }
+
+    for( auto const& entry : table ) {
+        if( entry.first.first == from ) {
+            E eFrom(std::min(entry.first.first, from), std::min(entry.first.first, from));
+            E eTo(std::min(entry.first.first, to), std::min(entry.first.first, to));
+
+            table[eTo] = table[eFrom];
+            table.erase(eFrom);
+
+        } else if ( entry.first.second == from ) {
+            E eFrom(std::min(entry.first.second, from), std::min(entry.first.second, from));
+            E eTo(std::min(entry.first.second, to), std::min(entry.first.second, to));
+
+            table[eTo] = table[eFrom];
+            table.erase(eFrom);
+        }
+    }
+    return *this;
+}
+
+std::set<int> EdgeTable::getVertices() {
+    NList vertices;
+
+    for( auto const& entry : table) {
+        vertices.insert(entry.first.first);
+    }
+
+    return vertices;
 }
