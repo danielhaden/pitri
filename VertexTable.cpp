@@ -50,8 +50,8 @@ Vertex &VertexTable::operator[](int vertex) {
 
 }
 
-int VertexTable::size() {
-    return table.size();
+int VertexTable::size() const {
+    return int(table.size());
 }
 
 VertexTable &VertexTable::relabel(int from, int to) {

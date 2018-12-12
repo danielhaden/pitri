@@ -45,17 +45,13 @@ Graph &Graph::operator-(int v) {
 
 Graph &Graph::operator-(Graph::E edge) {
 
-//    if (!atable.contains(edge)) {
-//        return *this;
-//    }
-
     atable-edge;
     etable-edge;
 
     return *this;
 }
 
-int Graph::v() {
+int Graph::v() const {
     return vtable.size();
 }
 
@@ -131,7 +127,7 @@ Graph &Graph::relabelVertex(int from, int to) {
 }
 
 Graph &Graph::relabelAll(int start, int finish) {
-    NList vertices = VertexIDSet();
+    NList vertices = getVertexIDSet();
 
     // check that range is valid for graph
     if (vertices.size() != (finish - start + 1)) {
@@ -160,13 +156,12 @@ Graph &Graph::relabelAll(int start, int finish) {
         int from = *(diffFrom.begin());
         relabelVertex(from, to);
         diffFrom.erase(diffFrom.begin());
-
     }
 
     return *this;
 }
 
-std::set<int> Graph::VertexIDSet() {
+std::set<int> Graph::getVertexIDSet() {
     NList vertices;
 
     for (auto const& v : atable.table) {
@@ -215,9 +210,21 @@ Graph &Graph::operator=(Graph const &g) {
     vtable = g.vtable;
     etable = g.etable;
 
-
     return *this;
 }
+
+Graph& Graph::operator+(Graph const &g) const {
+    Graph lhs = *this;
+    Graph rhs = g;
+
+    lhs.relabelAll(1, lhs.v());
+    rhs.relabelAll(lhs.v()+1, lhs.v()+rhs.v()+1);
+
+    // need to overload etable, vtable, atable operator+ for self-type addition
+
+    return rhs;
+}
+
 
 
 

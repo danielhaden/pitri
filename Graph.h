@@ -34,27 +34,32 @@ public:
     Graph& operator|(E edge);   // contracts edge
 
     // graph operators
-    Graph& operator=(Graph const& g);   // assignment
-    Graph& operator*(Graph const& g);   // joins two graphs
+    Graph& operator=(Graph const& g);        // assignment
+    Graph& operator+(Graph const& g) const;  // adds two graphs
+    Graph operator*(Graph const& g) const;   // joins two graphs
+    Graph inflate(Graph const& g) const;     // inlates the graph with g
+
     Graph& complete();                  // adds every edge to the graph
     Graph& clearEdges();                // removes every edge
 
     // graph accessors
-    int v();                        // returns the number of vertices
-    int e();                        // returns the number of edges
-    std::set<int> VertexIDSet();   // returns the set of vertex ids
+    int v() const;                   // returns the number of vertices
+    int e();                         // returns the number of edges
+    std::set<int> getVertexIDSet();  // returns the set of vertex ids
 
     friend std::ostream& operator<<(std::ostream& stream, const Graph& g);
 
-    // graph analyzers
+    // graph planarity
+    bool isPlanar();
 
+
+    // graph coloring
+    Graph& color();
 
 private:
     AdjacencyTable atable;
     VertexTable vtable;
     EdgeTable etable;
-
-    // private methods
 
 };
 

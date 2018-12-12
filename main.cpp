@@ -30,13 +30,14 @@ int main() {
     g-E(1,8);
     cout << g.e() << endl;
 
-    Graph k('K', 6);
-    k.relabelVertex(2,9);
-    cout << k << endl;
-    k.relabelAll(8,13);
+    Graph k('K', 10);
+
 
     cout << k << endl;
 
+    // implement string constructor
+    // overload + and *
+    // implement isPlanar()
 
 
 

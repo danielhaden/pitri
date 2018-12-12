@@ -25,7 +25,7 @@ public:
     // accessors
     Vertex& operator[](int vertex);
     bool contains(int vertex);
-    int size();
+    int size() const;
     std::map<int, std::shared_ptr<Vertex> >& getTable();
 
 private:
