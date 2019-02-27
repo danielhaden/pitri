@@ -225,6 +225,28 @@ Graph& Graph::operator+(Graph const &g) const {
     return rhs;
 }
 
+Graph::Graph(char c, int m, int n) {
+
+
+    if (c == 'K') {         // 'K' flag produces a complete graph of order given
+
+        // generate vertices
+        for (int i = 1; i <= m+n; i++) {
+            operator+(i);
+        }
+
+        // generate edges
+        for (int i = 1; i <= m; i++) {
+            for (int j = m+1; j <= m+n; j++) {
+                operator+(E(i,j));
+            }
+        }
+
+    } else {
+        throw ConstructorException();
+    }
+}
+
 
 
 

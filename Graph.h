@@ -19,7 +19,8 @@ class Graph {
 public:
     // constructors
     Graph() = default;
-    Graph(char c, int order);
+    Graph(char c, int order);       // cycle, complete so far
+    Graph(char c, int m, int n);   // complete bipartite
 
     // vertex operators
     Graph& operator+(int v);                    // adds a vertex
@@ -34,10 +35,11 @@ public:
     Graph& operator|(E edge);   // contracts edge
 
     // graph operators
-    Graph& operator=(Graph const& g);        // assignment
-    Graph& operator+(Graph const& g) const;  // adds two graphs
-    Graph operator*(Graph const& g) const;   // joins two graphs
-    Graph inflate(Graph const& g) const;     // inlates the graph with g
+    Graph& operator=(Graph const& g);                   // assignment
+    Graph& operator+(Graph const& g) const;             // adds two graphs
+    Graph operator*(Graph const& g) const;              // joins two graphs
+    Graph inflate(Graph const& g) const;                // inflates the graph with g
+    Graph cliquesum(Graph const& g1, Graph const& g2);
 
     Graph& complete();                  // adds every edge to the graph
     Graph& clearEdges();                // removes every edge

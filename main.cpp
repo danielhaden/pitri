@@ -6,8 +6,7 @@
 #include "VertexTable.h"
 #include <list>
 
-#include <QApplication>
-#include <QPushButton>
+//GUI
 
 typedef std::pair<int, int> E;
 typedef std::map<int, std::list<int> > G;
@@ -16,12 +15,6 @@ using std::cout;
 using std::endl;
 
 int main(int argc, char **argv) {
-    QApplication app (argc, argv);
-
-    QPushButton button;
-    button.setText("My text");
-    button.setToolTip("A tooltip");
-    button.show();
 
 //    Graph g;
 //    cout << g.e() << endl;
@@ -39,21 +32,14 @@ int main(int argc, char **argv) {
 //    cout << g.e() << endl;
 //    g-E(1,8);
 //    cout << g.e() << endl;
-//
-//    Graph k('K', 10);
-//
-//
-//    cout << k << endl;
+    Graph kk('K', 2, 3);
+
+    cout << kk;
+
+    return 0;
 
     // implement string constructor
     // overload + and *
     // implement isPlanar()
 
-
-
-
-
-
-
-    return app.exec();
 }
