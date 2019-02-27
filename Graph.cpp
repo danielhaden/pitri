@@ -247,6 +247,10 @@ Graph::Graph(char c, int m, int n) {
     }
 }
 
+bool Graph::isEmbedded() {
+    return embedded;
+}
+
 
 
 

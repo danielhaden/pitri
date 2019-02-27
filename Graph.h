@@ -48,6 +48,7 @@ public:
     int v() const;                   // returns the number of vertices
     int e();                         // returns the number of edges
     std::set<int> getVertexIDSet();  // returns the set of vertex ids
+    bool isEmbedded();               //
 
     friend std::ostream& operator<<(std::ostream& stream, const Graph& g);
 
@@ -62,6 +63,7 @@ private:
     AdjacencyTable atable;
     VertexTable vtable;
     EdgeTable etable;
+    bool embedded;
 
 };
 

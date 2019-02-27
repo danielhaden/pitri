@@ -6,8 +6,6 @@
 #include "VertexTable.h"
 #include <list>
 
-//GUI
-
 typedef std::pair<int, int> E;
 typedef std::map<int, std::list<int> > G;
 

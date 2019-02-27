@@ -18,6 +18,8 @@ struct Vertex {
     int id;
     std::string tag;
     int color;
+    int x;              // embedding coordinates
+    int y;              // embedding coordinates
 
     // mutators
     void setID(int _id);
